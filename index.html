@@ -41,13 +41,12 @@
             background-color: #f9fafb;
             overflow-y: auto;
             z-index: 10;
+            display: none;
         }
         .screen-page.active {
             transform: translateX(0);
             z-index: 20;
-        }
-         .screen-page.no-nav {
-            height: 100%;
+            display: block;
         }
         .iphone-notch {
             position: absolute;
@@ -165,7 +164,7 @@
         <div class="iphone-screen">
             <!-- Page 1: Registration -->
             <div id="page-register" class="screen-page">
-                <div class="pt-20 p-6">
+                <div class="pt-20 p-6 pb-24">
                     <div class="text-center mb-10">
                         <h1 class="text-4xl font-bold text-gray-800">UniMarket</h1>
                         <p class="text-gray-500 mt-2">The Student Marketplace</p>
@@ -196,7 +195,7 @@
 
             <!-- Page 2: Listings -->
             <div id="page-listings" class="screen-page">
-                 <div class="pt-20 p-4">
+                 <div class="pt-20 p-4 pb-24">
                     <!-- Header -->
                     <div class="flex justify-between items-center mb-4 px-2">
                          <h1 class="text-3xl font-bold text-gray-800">For You</h1>
@@ -207,54 +206,24 @@
                     </div>
 
                     <!-- Categories -->
-                    <div class="flex space-x-4 mb-6 pb-2 overflow-x-auto">
-                        <button class="px-4 py-2 bg-red-100 accent-text rounded-full font-semibold whitespace-nowrap">All</button>
-                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap">Books</button>
-                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap">Electronics</button>
-                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap">Housing</button>
-                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap">Courses</button>
-                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap">Altklausuren</button>
+                    <div class="flex space-x-4 mb-6 pb-2 overflow-x-auto" id="category-filter">
+                        <button class="px-4 py-2 bg-red-100 accent-text rounded-full font-semibold whitespace-nowrap" data-category="All">All</button>
+                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Books">Books</button>
+                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Housing">Housing</button>
+                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Altklausuren">Altklausuren</button>
+                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Courses">Courses</button>
                     </div>
 
                     <!-- Grid -->
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="item-card" style="animation-delay: 0.1s;">
-                            <img src="https://placehold.co/400x400/e2e8f0/334155?text=Textbook" class="rounded-xl w-full h-40 object-cover" alt="Item">
-                            <h3 class="font-semibold mt-2 text-gray-800">Econ 101 Textbook</h3>
-                            <p class="accent-text font-bold text-lg">$25</p>
-                        </div>
-                        <div class="item-card" style="animation-delay: 0.2s;">
-                            <img src="https://placehold.co/400x400/e2e8f0/334155?text=Lamp" class="rounded-xl w-full h-40 object-cover" alt="Item">
-                            <h3 class="font-semibold mt-2 text-gray-800">Desk Lamp</h3>
-                            <p class="accent-text font-bold text-lg">$15</p>
-                        </div>
-                        <div class="item-card" style="animation-delay: 0.3s;">
-                            <img src="https://placehold.co/400x400/e2e8f0/334155?text=Chair" class="rounded-xl w-full h-40 object-cover" alt="Item">
-                            <h3 class="font-semibold mt-2 text-gray-800">Ergonomic Chair</h3>
-                            <p class="font-semibold text-blue-600 text-lg">Exchange</p>
-                        </div>
-                        <div class="item-card" style="animation-delay: 0.4s;">
-                            <img src="https://placehold.co/400x400/e2e8f0/334155?text=Calculator" class="rounded-xl w-full h-40 object-cover" alt="Item">
-                            <h3 class="font-semibold mt-2 text-gray-800">TI-84 Calculator</h3>
-                            <p class="accent-text font-bold text-lg">$50</p>
-                        </div>
-                         <div class="item-card" style="animation-delay: 0.5s;">
-                            <img src="https://placehold.co/400x400/e2e8f0/334155?text=Notes" class="rounded-xl w-full h-40 object-cover" alt="Item">
-                            <h3 class="font-semibold mt-2 text-gray-800">Chem Final Notes</h3>
-                            <p class="accent-text font-bold text-lg">$10</p>
-                        </div>
-                        <div class="item-card" style="animation-delay: 0.6s;">
-                            <img src="https://placehold.co/400x400/e2e8f0/334155?text=Mini+Fridge" class="rounded-xl w-full h-40 object-cover" alt="Item">
-                            <h3 class="font-semibold mt-2 text-gray-800">Mini Fridge</h3>
-                            <p class="accent-text font-bold text-lg">$40</p>
-                        </div>
+                    <div id="item-grid" class="grid grid-cols-2 gap-4">
+                        <!-- Items will be injected here by JS -->
                     </div>
                 </div>
             </div>
 
             <!-- Page 3: Chat -->
             <div id="page-chat" class="screen-page">
-                 <div class="pt-20">
+                 <div class="pt-20 pb-24">
                     <h1 class="text-3xl font-bold text-gray-800 px-4 mb-4">Messages</h1>
                      <div class="divide-y divide-gray-200">
                          <!-- Chat item 1 -->
@@ -284,53 +253,46 @@
             </div>
             
             <!-- Page 4: Add Item -->
-            <div id="page-add-item" class="screen-page no-nav bg-white">
-                <div class="page-header">
-                    <i class="fas fa-arrow-left back-arrow" data-target="page-listings"></i>
-                    <h2 class="title mr-10">Add New Item</h2>
-                </div>
-                <div class="p-6 space-y-6">
-                    <div class="h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center text-gray-500 cursor-pointer">
-                        <i class="fas fa-camera text-4xl"></i>
-                        <p class="mt-2 font-semibold">Add Photo</p>
+            <div id="page-add-item" class="screen-page bg-white">
+                <div class="h-full">
+                    <div class="page-header">
+                        <i class="fas fa-arrow-left back-arrow" data-target="page-listings"></i>
+                        <h2 class="title mr-10">Add New Item</h2>
                     </div>
-                     <div>
-                        <label class="text-sm font-medium text-gray-700">Title</label>
-                        <input type="text" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="e.g. Psychology 101 Textbook">
-                    </div>
-                    <div>
-                        <label class="text-sm font-medium text-gray-700">Price ($)</label>
-                        <input type="number" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="Enter 0 for Exchange/Free">
-                    </div>
-                    <div>
-                        <label class="text-sm font-medium text-gray-700">Description</label>
-                        <textarea rows="4" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="Describe your item, its condition, etc."></textarea>
-                    </div>
-                    <button type="button" class="w-full accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Post Item</button>
+                    <form id="add-item-form" class="p-6 space-y-6 pb-24">
+                        <div class="h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center text-gray-500 cursor-pointer">
+                            <i class="fas fa-camera text-4xl"></i>
+                            <p class="mt-2 font-semibold">Add Photo</p>
+                        </div>
+                        <div>
+                            <label class="text-sm font-medium text-gray-700">Title</label>
+                            <input id="item-title-input" type="text" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="e.g. Psychology 101 Textbook" required>
+                        </div>
+                         <div>
+                            <label class="text-sm font-medium text-gray-700">Category</label>
+                            <select id="item-category-select" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" required>
+                               <option value="Books">Books</option>
+                               <option value="Housing">Housing</option>
+                               <option value="Altklausuren">Altklausuren</option>
+                               <option value="Courses">Courses</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-sm font-medium text-gray-700">Price (€)</label>
+                            <input id="item-price-input" type="number" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="Enter 0 for Exchange/Free" required>
+                        </div>
+                        <div>
+                            <label class="text-sm font-medium text-gray-700">Description</label>
+                            <textarea id="item-description-input" rows="4" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="Describe your item, its condition, etc."></textarea>
+                        </div>
+                        <button id="post-item-btn" type="submit" class="w-full accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Post Item</button>
+                    </form>
                 </div>
             </div>
 
             <!-- Page 5: Item Detail -->
-            <div id="page-item-detail" class="screen-page no-nav bg-white">
-                 <div class="relative">
-                    <img src="https://placehold.co/600x600/e2e8f0/334155?text=Item+Image" class="w-full h-80 object-cover" alt="Item detail">
-                    <i class="fas fa-arrow-left back-arrow absolute top-12 left-4 bg-white/70 backdrop-blur-sm p-3 rounded-full" data-target="page-listings"></i>
-                 </div>
-                 <div class="p-6 -mt-4 bg-white rounded-t-2xl">
-                    <h1 class="text-3xl font-bold text-gray-800">Econ 101 Textbook</h1>
-                    <p class="accent-text font-bold text-3xl my-2">$25</p>
-                    <p class="text-gray-600 leading-relaxed mt-4">
-                        Like new condition, barely used for one semester. No highlighting or writing inside. Required for the introductory Economics course. Can meet up on campus.
-                    </p>
-                    <div class="mt-6 border-t border-gray-200 pt-4 flex items-center">
-                        <img src="https://placehold.co/100x100/34d399/ffffff?text=S" class="w-12 h-12 rounded-full" alt="seller avatar">
-                        <div class="ml-4">
-                            <p class="font-semibold text-gray-800">Posted by</p>
-                            <p class="text-gray-600">Sarah Lee</p>
-                        </div>
-                    </div>
-                    <button class="w-full mt-6 accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Message Seller</button>
-                 </div>
+            <div id="page-item-detail" class="screen-page bg-white">
+                 <!-- Content will be injected by JS -->
             </div>
 
 
@@ -346,65 +308,142 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- Data ---
+            let items = [
+                { id: 1, title: 'Econ 101 Textbook', price: 25, category: 'Books', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Book' },
+                { id: 2, title: 'Studio Apartment', price: 750, category: 'Housing', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Housing' },
+                { id: 3, title: 'Analysis I Exam Prep', price: 'Exchange', category: 'Courses', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Course' },
+                { id: 4, title: 'Statistics Old Exams', price: 10, category: 'Altklausuren', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Exams' },
+                { id: 5, title: 'Room in Shared Flat', price: 550, category: 'Housing', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Room' },
+                { id: 6, title: 'German B1 Coursebook', price: 20, category: 'Books', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Book' },
+            ];
+
+            // --- State and Elements ---
             const pages = document.querySelectorAll('.screen-page');
             const navIcons = document.querySelectorAll('.nav-icon');
             const navBar = document.getElementById('nav-bar-container');
+            const itemGrid = document.getElementById('item-grid');
+            const categoryFilter = document.getElementById('category-filter');
+            const itemDetailPage = document.getElementById('page-item-detail');
+            const addItemForm = document.getElementById('add-item-form');
 
-            function showPage(pageId, isSubPage = false) {
-                // Hide all pages
-                pages.forEach(page => {
-                    page.classList.remove('active');
-                });
-                // Show the target page
+            let activeTab = 'listings';
+            const mainPages = ['page-register', 'page-listings', 'page-chat'];
+
+            // --- Page Navigation ---
+            function showPage(pageId) {
+                if (mainPages.includes(pageId)) {
+                    activeTab = pageId;
+                }
+                pages.forEach(page => page.classList.remove('active'));
                 const targetPage = document.getElementById(pageId);
                 if (targetPage) {
                     targetPage.classList.add('active');
+                    targetPage.scrollTop = 0;
                 }
-
-                // Show/hide bottom nav bar
-                if (isSubPage) {
-                    navBar.style.display = 'none';
-                } else {
-                    navBar.style.display = 'flex';
-                }
-
-                // Update nav icon active state only for main pages
-                if (!isSubPage) {
-                    navIcons.forEach(icon => {
-                        const iconPage = `page-${icon.id.split('-')[1]}`;
-                        if (iconPage === pageId) {
-                            icon.classList.add('active');
-                        } else {
-                            icon.classList.remove('active');
-                        }
-                    });
-                }
+                navIcons.forEach(icon => {
+                    const iconPage = `page-${icon.id.split('-')[1]}`;
+                    icon.classList.toggle('active', iconPage === activeTab);
+                });
             }
 
-            // --- Event Listeners for Bottom Nav ---
+            // --- Content Rendering ---
+            function renderItems(filter = 'All') {
+                itemGrid.innerHTML = '';
+                const itemsToRender = (filter === 'All' ? items : items.filter(item => item.category === filter)).slice().reverse();
+                
+                itemsToRender.forEach((item, index) => {
+                    const priceDisplay = typeof item.price === 'number'
+                        ? `<p class="accent-text font-bold text-lg">€${item.price}</p>`
+                        : `<p class="font-semibold text-blue-600 text-lg">${item.price}</p>`;
+
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+                    card.style.animationDelay = `${index * 0.05}s`;
+                    card.innerHTML = `
+                        <img src="${item.image}" class="rounded-xl w-full h-40 object-cover" alt="${item.title}">
+                        <h3 class="font-semibold mt-2 text-gray-800">${item.title}</h3>
+                        ${priceDisplay}
+                    `;
+                    card.addEventListener('click', () => showItemDetail(item));
+                    itemGrid.appendChild(card);
+                });
+            }
+            
+            function showItemDetail(item) {
+                const priceDisplay = typeof item.price === 'number'
+                        ? `<p class="accent-text font-bold text-3xl my-2">€${item.price}</p>`
+                        : `<p class="font-semibold text-blue-600 text-3xl my-2">${item.price}</p>`;
+                
+                itemDetailPage.innerHTML = `
+                    <div class="h-full pb-24">
+                        <div class="relative">
+                           <img src="${item.image.replace('400x400', '600x600')}" class="w-full h-80 object-cover" alt="${item.title}">
+                           <i class="fas fa-arrow-left back-arrow absolute top-12 left-4 text-xl bg-white/70 backdrop-blur-sm p-3 rounded-full cursor-pointer" data-target="page-listings"></i>
+                        </div>
+                        <div class="p-6 -mt-4 bg-white rounded-t-2xl">
+                           <h1 class="text-3xl font-bold text-gray-800">${item.title}</h1>
+                           ${priceDisplay}
+                           <p class="text-gray-600 leading-relaxed mt-4">
+                               ${item.description || 'Like new condition, barely used for one semester. No highlighting or writing inside. Required for the introductory Economics course. Can meet up on campus.'}
+                           </p>
+                           <div class="mt-6 border-t border-gray-200 pt-4 flex items-center">
+                               <img src="https://placehold.co/100x100/34d399/ffffff?text=S" class="w-12 h-12 rounded-full" alt="seller avatar">
+                               <div class="ml-4">
+                                   <p class="font-semibold text-gray-800">Posted by</p>
+                                   <p class="text-gray-600">Sarah Lee</p>
+                               </div>
+                           </div>
+                           <button class="w-full mt-6 accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Message Seller</button>
+                        </div>
+                    </div>`;
+                itemDetailPage.querySelector('.back-arrow').addEventListener('click', (e) => showPage(e.currentTarget.dataset.target));
+                showPage('page-item-detail');
+            }
+
+
+            // --- Event Listeners ---
             document.getElementById('nav-register').addEventListener('click', () => showPage('page-register'));
             document.getElementById('nav-listings').addEventListener('click', () => showPage('page-listings'));
             document.getElementById('nav-chat').addEventListener('click', () => showPage('page-chat'));
-
-            // --- Event Listeners for Page Navigation ---
-            // '+' button to "Add Item" page
-            document.getElementById('add-item-btn').addEventListener('click', () => showPage('page-add-item', true));
+            document.getElementById('add-item-btn').addEventListener('click', () => showPage('page-add-item'));
             
-            // Item cards to "Item Detail" page
-            document.querySelectorAll('.item-card').forEach(card => {
-                card.addEventListener('click', () => showPage('page-item-detail', true));
-            });
-
-            // Back arrows to "Listings" page
             document.querySelectorAll('.back-arrow').forEach(arrow => {
-                arrow.addEventListener('click', (e) => {
-                    const targetPageId = e.currentTarget.dataset.target;
-                    showPage(targetPageId);
-                });
+                arrow.addEventListener('click', (e) => showPage(e.currentTarget.dataset.target));
             });
 
-            // Set initial page
-            showPage('page-register');
+            categoryFilter.addEventListener('click', (e) => {
+                if(e.target.tagName === 'BUTTON') {
+                    categoryFilter.querySelectorAll('button').forEach(btn => {
+                        btn.classList.remove('bg-red-100', 'accent-text');
+                        btn.classList.add('bg-gray-100', 'text-gray-600');
+                    });
+                    e.target.classList.add('bg-red-100', 'accent-text');
+                    e.target.classList.remove('bg-gray-100', 'text-gray-600');
+                    renderItems(e.target.dataset.category);
+                }
+            });
+            
+            addItemForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const newItem = {
+                    id: Date.now(),
+                    title: document.getElementById('item-title-input').value,
+                    price: parseFloat(document.getElementById('item-price-input').value) || 'Exchange',
+                    category: document.getElementById('item-category-select').value,
+                    description: document.getElementById('item-description-input').value,
+                    image: `https://placehold.co/400x400/e2e8f0/334155?text=${document.getElementById('item-category-select').value}`
+                };
+                items.push(newItem);
+                addItemForm.reset();
+                renderItems();
+                showPage('page-listings');
+            });
+
+
+            // --- Initial Load ---
+            renderItems();
+            showPage('page-listings');
         });
     </script>
 </body>
