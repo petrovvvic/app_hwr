@@ -35,20 +35,19 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100% - 80px); /* Adjust for nav bar */
+            height: 100%;
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateX(100%);
             background-color: #f9fafb;
             overflow-y: auto;
-            display: none; /* Hidden by default */
+            z-index: 10;
         }
         .screen-page.active {
             transform: translateX(0);
-            display: block; /* Shown when active */
+            z-index: 20;
         }
-        .screen-page:first-child {
-            transform: translateX(0);
-            display: block;
+         .screen-page.no-nav {
+            height: 100%;
         }
         .iphone-notch {
             position: absolute;
@@ -87,6 +86,7 @@
             justify-content: space-around;
             align-items: center;
             padding-bottom: 20px; /* For home indicator space */
+            z-index: 30;
         }
         .nav-icon {
             cursor: pointer;
@@ -118,6 +118,7 @@
             opacity: 0;
             transform: translateY(20px);
             animation: fadeIn 0.5s forwards;
+            cursor: pointer;
         }
 
         @keyframes fadeIn {
@@ -125,6 +126,26 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+        .page-header {
+             display: flex;
+             align-items: center;
+             padding: 16px;
+             padding-top: 50px;
+             background-color: #ffffff;
+             border-bottom: 1px solid #e5e7eb;
+        }
+        .page-header .back-arrow {
+            font-size: 20px;
+            color: #374151;
+            cursor: pointer;
+        }
+        .page-header .title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-left: 16px;
+            flex-grow: 1;
+            text-align: center;
         }
     </style>
 </head>
@@ -143,176 +164,247 @@
 
         <div class="iphone-screen">
             <!-- Page 1: Registration -->
-            <div id="page-register" class="screen-page active p-6 pt-20">
-                <div class="text-center mb-10">
-                    <h1 class="text-4xl font-bold text-gray-800">UniMarket</h1>
-                    <p class="text-gray-500 mt-2">The Student Marketplace</p>
-                </div>
-                
-                <form class="space-y-6">
-                    <div>
-                        <label for="name" class="text-sm font-medium text-gray-700">Full Name</label>
-                        <input type="text" name="name" id="name" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="John Doe">
-                    </div>
-                     <div>
-                        <label for="email" class="text-sm font-medium text-gray-700">University Email</label>
-                        <input type="email" name="email" id="email" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="you@university.edu">
-                    </div>
-                    <div>
-                        <label for="password" class="text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" name="password" id="password" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="••••••••">
+            <div id="page-register" class="screen-page">
+                <div class="pt-20 p-6">
+                    <div class="text-center mb-10">
+                        <h1 class="text-4xl font-bold text-gray-800">UniMarket</h1>
+                        <p class="text-gray-500 mt-2">The Student Marketplace</p>
                     </div>
                     
-                    <button type="button" class="w-full accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Create Account</button>
-                </form>
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="text-sm font-medium text-gray-700">Full Name</label>
+                            <input type="text" name="name" id="name" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="John Doe">
+                        </div>
+                         <div>
+                            <label for="email" class="text-sm font-medium text-gray-700">University Email</label>
+                            <input type="email" name="email" id="email" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="you@university.edu">
+                        </div>
+                        <div>
+                            <label for="password" class="text-sm font-medium text-gray-700">Password</label>
+                            <input type="password" name="password" id="password" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="••••••••">
+                        </div>
+                        
+                        <button type="button" class="w-full accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Create Account</button>
+                    </form>
 
-                <p class="text-center text-gray-500 text-sm mt-8">
-                    Already have an account? <a href="#" class="font-medium accent-text hover:underline">Sign In</a>
-                </p>
+                    <p class="text-center text-gray-500 text-sm mt-8">
+                        Already have an account? <a href="#" class="font-medium accent-text hover:underline">Sign In</a>
+                    </p>
+                </div>
             </div>
 
             <!-- Page 2: Listings -->
-            <div id="page-listings" class="screen-page p-4 pt-20">
-                <!-- Header -->
-                <div class="flex justify-between items-center mb-4 px-2">
-                     <h1 class="text-3xl font-bold text-gray-800">For You</h1>
-                     <div class="flex items-center space-x-4">
-                        <i class="fas fa-search text-gray-500 text-xl"></i>
-                        <i class="fas fa-plus-circle accent-text text-3xl cursor-pointer"></i>
-                     </div>
-                </div>
+            <div id="page-listings" class="screen-page">
+                 <div class="pt-20 p-4">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center mb-4 px-2">
+                         <h1 class="text-3xl font-bold text-gray-800">For You</h1>
+                         <div class="flex items-center space-x-4">
+                            <i class="fas fa-search text-gray-500 text-xl"></i>
+                            <i id="add-item-btn" class="fas fa-plus-circle accent-text text-3xl cursor-pointer"></i>
+                         </div>
+                    </div>
 
-                <!-- Categories -->
-                <div class="flex space-x-4 mb-6 pb-2 overflow-x-auto">
-                    <button class="px-4 py-2 bg-red-100 accent-text rounded-full font-semibold whitespace-nowrap">All</button>
-                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap">Books</button>
-                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap">Electronics</button>
-                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap">Furniture</button>
-                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap">Notes</button>
-                </div>
+                    <!-- Categories -->
+                    <div class="flex space-x-4 mb-6 pb-2 overflow-x-auto">
+                        <button class="px-4 py-2 bg-red-100 accent-text rounded-full font-semibold whitespace-nowrap">All</button>
+                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap">Books</button>
+                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap">Electronics</button>
+                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap">Furniture</button>
+                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap">Notes</button>
+                    </div>
 
-                <!-- Grid -->
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="item-card" style="animation-delay: 0.1s;">
-                        <img src="https://placehold.co/400x400/e2e8f0/334155?text=Textbook" class="rounded-xl w-full h-40 object-cover" alt="Item">
-                        <h3 class="font-semibold mt-2 text-gray-800">Econ 101 Textbook</h3>
-                        <p class="accent-text font-bold text-lg">$25</p>
-                    </div>
-                    <div class="item-card" style="animation-delay: 0.2s;">
-                        <img src="https://placehold.co/400x400/e2e8f0/334155?text=Lamp" class="rounded-xl w-full h-40 object-cover" alt="Item">
-                        <h3 class="font-semibold mt-2 text-gray-800">Desk Lamp</h3>
-                        <p class="accent-text font-bold text-lg">$15</p>
-                    </div>
-                    <div class="item-card" style="animation-delay: 0.3s;">
-                        <img src="https://placehold.co/400x400/e2e8f0/334155?text=Chair" class="rounded-xl w-full h-40 object-cover" alt="Item">
-                        <h3 class="font-semibold mt-2 text-gray-800">Ergonomic Chair</h3>
-                        <p class="font-semibold text-blue-600 text-lg">Exchange</p>
-                    </div>
-                    <div class="item-card" style="animation-delay: 0.4s;">
-                        <img src="https://placehold.co/400x400/e2e8f0/334155?text=Calculator" class="rounded-xl w-full h-40 object-cover" alt="Item">
-                        <h3 class="font-semibold mt-2 text-gray-800">TI-84 Calculator</h3>
-                        <p class="accent-text font-bold text-lg">$50</p>
-                    </div>
-                     <div class="item-card" style="animation-delay: 0.5s;">
-                        <img src="https://placehold.co/400x400/e2e8f0/334155?text=Notes" class="rounded-xl w-full h-40 object-cover" alt="Item">
-                        <h3 class="font-semibold mt-2 text-gray-800">Chem Final Notes</h3>
-                        <p class="accent-text font-bold text-lg">$10</p>
-                    </div>
-                    <div class="item-card" style="animation-delay: 0.6s;">
-                        <img src="https://placehold.co/400x400/e2e8f0/334155?text=Mini+Fridge" class="rounded-xl w-full h-40 object-cover" alt="Item">
-                        <h3 class="font-semibold mt-2 text-gray-800">Mini Fridge</h3>
-                        <p class="accent-text font-bold text-lg">$40</p>
+                    <!-- Grid -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="item-card" style="animation-delay: 0.1s;">
+                            <img src="https://placehold.co/400x400/e2e8f0/334155?text=Textbook" class="rounded-xl w-full h-40 object-cover" alt="Item">
+                            <h3 class="font-semibold mt-2 text-gray-800">Econ 101 Textbook</h3>
+                            <p class="accent-text font-bold text-lg">$25</p>
+                        </div>
+                        <div class="item-card" style="animation-delay: 0.2s;">
+                            <img src="https://placehold.co/400x400/e2e8f0/334155?text=Lamp" class="rounded-xl w-full h-40 object-cover" alt="Item">
+                            <h3 class="font-semibold mt-2 text-gray-800">Desk Lamp</h3>
+                            <p class="accent-text font-bold text-lg">$15</p>
+                        </div>
+                        <div class="item-card" style="animation-delay: 0.3s;">
+                            <img src="https://placehold.co/400x400/e2e8f0/334155?text=Chair" class="rounded-xl w-full h-40 object-cover" alt="Item">
+                            <h3 class="font-semibold mt-2 text-gray-800">Ergonomic Chair</h3>
+                            <p class="font-semibold text-blue-600 text-lg">Exchange</p>
+                        </div>
+                        <div class="item-card" style="animation-delay: 0.4s;">
+                            <img src="https://placehold.co/400x400/e2e8f0/334155?text=Calculator" class="rounded-xl w-full h-40 object-cover" alt="Item">
+                            <h3 class="font-semibold mt-2 text-gray-800">TI-84 Calculator</h3>
+                            <p class="accent-text font-bold text-lg">$50</p>
+                        </div>
+                         <div class="item-card" style="animation-delay: 0.5s;">
+                            <img src="https://placehold.co/400x400/e2e8f0/334155?text=Notes" class="rounded-xl w-full h-40 object-cover" alt="Item">
+                            <h3 class="font-semibold mt-2 text-gray-800">Chem Final Notes</h3>
+                            <p class="accent-text font-bold text-lg">$10</p>
+                        </div>
+                        <div class="item-card" style="animation-delay: 0.6s;">
+                            <img src="https://placehold.co/400x400/e2e8f0/334155?text=Mini+Fridge" class="rounded-xl w-full h-40 object-cover" alt="Item">
+                            <h3 class="font-semibold mt-2 text-gray-800">Mini Fridge</h3>
+                            <p class="accent-text font-bold text-lg">$40</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Page 3: Chat -->
-            <div id="page-chat" class="screen-page pt-20 bg-white">
-                 <h1 class="text-3xl font-bold text-gray-800 px-4 mb-4">Messages</h1>
-                 <div class="divide-y divide-gray-200">
-                     <!-- Chat item 1 -->
-                     <div class="p-4 flex items-center hover:bg-gray-50 cursor-pointer transition-colors">
-                         <img src="https://placehold.co/100x100/f87171/ffffff?text=A" class="w-14 h-14 rounded-full mr-4" alt="avatar">
-                         <div class="flex-1">
-                             <div class="flex justify-between">
-                                 <h3 class="font-semibold text-gray-800">Alex Johnson</h3>
-                                 <p class="text-xs text-gray-500">2:30 PM</p>
+            <div id="page-chat" class="screen-page">
+                 <div class="pt-20">
+                    <h1 class="text-3xl font-bold text-gray-800 px-4 mb-4">Messages</h1>
+                     <div class="divide-y divide-gray-200">
+                         <!-- Chat item 1 -->
+                         <div class="p-4 flex items-center hover:bg-gray-50 cursor-pointer transition-colors">
+                             <img src="https://placehold.co/100x100/f87171/ffffff?text=A" class="w-14 h-14 rounded-full mr-4" alt="avatar">
+                             <div class="flex-1 min-w-0">
+                                 <div class="flex justify-between">
+                                     <h3 class="font-semibold text-gray-800">Alex Johnson</h3>
+                                     <p class="text-xs text-gray-500">2:30 PM</p>
+                                 </div>
+                                 <p class="text-gray-600 break-words">Hey! Is the Econ textbook still available?</p>
                              </div>
-                             <p class="text-gray-600 truncate">Hey! Is the Econ textbook still available?</p>
                          </div>
-                     </div>
-                      <!-- Chat item 2 -->
-                     <div class="p-4 flex items-center hover:bg-gray-50 cursor-pointer transition-colors">
-                         <img src="https://placehold.co/100x100/60a5fa/ffffff?text=S" class="w-14 h-14 rounded-full mr-4" alt="avatar">
-                         <div class="flex-1">
-                             <div class="flex justify-between">
-                                 <h3 class="font-semibold text-gray-800">Sarah Lee</h3>
-                                 <p class="text-xs text-gray-500">Yesterday</p>
+                          <!-- Chat item 2 -->
+                         <div class="p-4 flex items-center hover:bg-gray-50 cursor-pointer transition-colors">
+                             <img src="https://placehold.co/100x100/60a5fa/ffffff?text=S" class="w-14 h-14 rounded-full mr-4" alt="avatar">
+                             <div class="flex-1 min-w-0">
+                                 <div class="flex justify-between">
+                                     <h3 class="font-semibold text-gray-800">Sarah Lee</h3>
+                                     <p class="text-xs text-gray-500">Yesterday</p>
+                                 </div>
+                                 <p class="text-gray-600 break-words">Perfect, I can pick up the chair tomorrow.</p>
                              </div>
-                             <p class="text-gray-600 truncate">Perfect, I can pick up the chair tomorrow.</p>
-                         </div>
-                     </div>
-                      <!-- Chat item 3 -->
-                     <div class="p-4 flex items-center hover:bg-gray-50 cursor-pointer transition-colors">
-                         <img src="https://placehold.co/100x100/34d399/ffffff?text=M" class="w-14 h-14 rounded-full mr-4" alt="avatar">
-                         <div class="flex-1">
-                             <div class="flex justify-between">
-                                 <h3 class="font-semibold text-gray-800">Mike Chen</h3>
-                                 <p class="text-xs text-gray-500">Mon</p>
-                             </div>
-                             <p class="text-gray-600 truncate">Can you do $40 for the calculator?</p>
                          </div>
                      </div>
                  </div>
             </div>
             
+            <!-- Page 4: Add Item -->
+            <div id="page-add-item" class="screen-page no-nav bg-white">
+                <div class="page-header">
+                    <i class="fas fa-arrow-left back-arrow" data-target="page-listings"></i>
+                    <h2 class="title mr-10">Add New Item</h2>
+                </div>
+                <div class="p-6 space-y-6">
+                    <div class="h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center text-gray-500 cursor-pointer">
+                        <i class="fas fa-camera text-4xl"></i>
+                        <p class="mt-2 font-semibold">Add Photo</p>
+                    </div>
+                     <div>
+                        <label class="text-sm font-medium text-gray-700">Title</label>
+                        <input type="text" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="e.g. Psychology 101 Textbook">
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Price ($)</label>
+                        <input type="number" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="Enter 0 for Exchange/Free">
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Description</label>
+                        <textarea rows="4" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="Describe your item, its condition, etc."></textarea>
+                    </div>
+                    <button type="button" class="w-full accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Post Item</button>
+                </div>
+            </div>
+
+            <!-- Page 5: Item Detail -->
+            <div id="page-item-detail" class="screen-page no-nav bg-white">
+                 <div class="relative">
+                    <img src="https://placehold.co/600x600/e2e8f0/334155?text=Item+Image" class="w-full h-80 object-cover" alt="Item detail">
+                    <i class="fas fa-arrow-left back-arrow absolute top-12 left-4 bg-white/70 backdrop-blur-sm p-3 rounded-full" data-target="page-listings"></i>
+                 </div>
+                 <div class="p-6 -mt-4 bg-white rounded-t-2xl">
+                    <h1 class="text-3xl font-bold text-gray-800">Econ 101 Textbook</h1>
+                    <p class="accent-text font-bold text-3xl my-2">$25</p>
+                    <p class="text-gray-600 leading-relaxed mt-4">
+                        Like new condition, barely used for one semester. No highlighting or writing inside. Required for the introductory Economics course. Can meet up on campus.
+                    </p>
+                    <div class="mt-6 border-t border-gray-200 pt-4 flex items-center">
+                        <img src="https://placehold.co/100x100/34d399/ffffff?text=S" class="w-12 h-12 rounded-full" alt="seller avatar">
+                        <div class="ml-4">
+                            <p class="font-semibold text-gray-800">Posted by</p>
+                            <p class="text-gray-600">Sarah Lee</p>
+                        </div>
+                    </div>
+                    <button class="w-full mt-6 accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Message Seller</button>
+                 </div>
+            </div>
+
+
             <!-- Bottom Navigation Bar -->
-            <div class="nav-bar">
+            <div id="nav-bar-container" class="nav-bar">
                 <i id="nav-listings" class="nav-icon fas fa-store"></i>
                 <i id="nav-chat" class="nav-icon fas fa-comments"></i>
-                <i id="nav-register" class="nav-icon active fas fa-user-circle"></i>
+                <i id="nav-register" class="nav-icon fas fa-user-circle"></i>
                 <div class="home-indicator"></div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- Navigation Logic ---
-        const pages = document.querySelectorAll('.screen-page');
-        const navIcons = document.querySelectorAll('.nav-icon');
+        document.addEventListener('DOMContentLoaded', () => {
+            const pages = document.querySelectorAll('.screen-page');
+            const navIcons = document.querySelectorAll('.nav-icon');
+            const navBar = document.getElementById('nav-bar-container');
 
-        function navigateTo(pageId) {
-            // Hide all pages
-            pages.forEach(page => {
-                page.classList.remove('active');
-            });
-            // Show the target page
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) {
-                targetPage.classList.add('active');
+            function showPage(pageId, isSubPage = false) {
+                // Hide all pages
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                // Show the target page
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                }
+
+                // Show/hide bottom nav bar
+                if (isSubPage) {
+                    navBar.style.display = 'none';
+                } else {
+                    navBar.style.display = 'flex';
+                }
+
+                // Update nav icon active state only for main pages
+                if (!isSubPage) {
+                    navIcons.forEach(icon => {
+                        const iconPage = `page-${icon.id.split('-')[1]}`;
+                        if (iconPage === pageId) {
+                            icon.classList.add('active');
+                        } else {
+                            icon.classList.remove('active');
+                        }
+                    });
+                }
             }
 
-            // Update nav icon active state
-            navIcons.forEach(icon => {
-                // The icon's ID corresponds to the page it controls, e.g., 'nav-listings' for 'page-listings'
-                if (`page-${icon.id.split('-')[1]}` === pageId) {
-                    icon.classList.add('active');
-                } else {
-                    icon.classList.remove('active');
-                }
+            // --- Event Listeners for Bottom Nav ---
+            document.getElementById('nav-register').addEventListener('click', () => showPage('page-register'));
+            document.getElementById('nav-listings').addEventListener('click', () => showPage('page-listings'));
+            document.getElementById('nav-chat').addEventListener('click', () => showPage('page-chat'));
+
+            // --- Event Listeners for Page Navigation ---
+            // '+' button to "Add Item" page
+            document.getElementById('add-item-btn').addEventListener('click', () => showPage('page-add-item', true));
+            
+            // Item cards to "Item Detail" page
+            document.querySelectorAll('.item-card').forEach(card => {
+                card.addEventListener('click', () => showPage('page-item-detail', true));
             });
-        }
 
-        // Add click listeners to nav icons
-        document.getElementById('nav-register').addEventListener('click', () => navigateTo('page-register'));
-        document.getElementById('nav-listings').addEventListener('click', () => navigateTo('page-listings'));
-        document.getElementById('nav-chat').addEventListener('click', () => navigateTo('page-chat'));
+            // Back arrows to "Listings" page
+            document.querySelectorAll('.back-arrow').forEach(arrow => {
+                arrow.addEventListener('click', (e) => {
+                    const targetPageId = e.currentTarget.dataset.target;
+                    showPage(targetPageId);
+                });
+            });
 
-        // Set initial page
-        document.addEventListener('DOMContentLoaded', () => {
-             navigateTo('page-register');
+            // Set initial page
+            showPage('page-register');
         });
-
     </script>
 </body>
 </html>
