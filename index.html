@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Marketplace App Mockup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .iphone-container {
+            width: 390px;
+            height: 844px;
+            border: 16px solid black;
+            border-radius: 56px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        .screen-page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 80px); /* Adjust for nav bar */
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+            background-color: #f9fafb;
+            overflow-y: auto;
+            display: none; /* Hidden by default */
+        }
+        .screen-page.active {
+            transform: translateX(0);
+            display: block; /* Shown when active */
+        }
+        .screen-page:first-child {
+            transform: translateX(0);
+            display: block;
+        }
+        .iphone-notch {
+            position: absolute;
+            top: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 30px;
+            background-color: black;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            z-index: 100;
+        }
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px 0;
+            color: #1f2937;
+            font-weight: 500;
+            font-size: 14px;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+        }
+        .nav-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background-color: #ffffff;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: 20px; /* For home indicator space */
+        }
+        .nav-icon {
+            cursor: pointer;
+            color: #9ca3af;
+            transition: color 0.3s, transform 0.3s;
+            font-size: 24px;
+        }
+        .nav-icon.active {
+            color: #d50b2e;
+            transform: scale(1.1);
+        }
+        .home-indicator {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 134px;
+            height: 5px;
+            background-color: #000000;
+            border-radius: 100px;
+        }
+        /* Custom Accent Color */
+        .accent-bg { background-color: #d50b2e; }
+        .accent-text { color: #d50b2e; }
+        .accent-border { border-color: #d50b2e; }
+
+        /* Item card animation */
+        .item-card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+    <div class="iphone-container">
+        <div class="iphone-notch"></div>
+        <div class="status-bar">
+            <span>9:41</span>
+            <div>
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi mx-1"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+
+        <div class="iphone-screen">
+            <!-- Page 1: Registration -->
+            <div id="page-register" class="screen-page active p-6 pt-20">
+                <div class="text-center mb-10">
+                    <h1 class="text-4xl font-bold text-gray-800">UniMarket</h1>
+                    <p class="text-gray-500 mt-2">The Student Marketplace</p>
+                </div>
+                
+                <form class="space-y-6">
+                    <div>
+                        <label for="name" class="text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" name="name" id="name" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="John Doe">
+                    </div>
+                     <div>
+                        <label for="email" class="text-sm font-medium text-gray-700">University Email</label>
+                        <input type="email" name="email" id="email" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="you@university.edu">
+                    </div>
+                    <div>
+                        <label for="password" class="text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" name="password" id="password" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="••••••••">
+                    </div>
+                    
+                    <button type="button" class="w-full accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Create Account</button>
+                </form>
+
+                <p class="text-center text-gray-500 text-sm mt-8">
+                    Already have an account? <a href="#" class="font-medium accent-text hover:underline">Sign In</a>
+                </p>
+            </div>
+
+            <!-- Page 2: Listings -->
+            <div id="page-listings" class="screen-page p-4 pt-20">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-4 px-2">
+                     <h1 class="text-3xl font-bold text-gray-800">For You</h1>
+                     <div class="flex items-center space-x-4">
+                        <i class="fas fa-search text-gray-500 text-xl"></i>
+                        <i class="fas fa-plus-circle accent-text text-3xl cursor-pointer"></i>
+                     </div>
+                </div>
+
+                <!-- Categories -->
+                <div class="flex space-x-4 mb-6 pb-2 overflow-x-auto">
+                    <button class="px-4 py-2 bg-red-100 accent-text rounded-full font-semibold whitespace-nowrap">All</button>
+                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap">Books</button>
+                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap">Electronics</button>
+                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap">Furniture</button>
+                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap">Notes</button>
+                </div>
+
+                <!-- Grid -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="item-card" style="animation-delay: 0.1s;">
+                        <img src="https://placehold.co/400x400/e2e8f0/334155?text=Textbook" class="rounded-xl w-full h-40 object-cover" alt="Item">
+                        <h3 class="font-semibold mt-2 text-gray-800">Econ 101 Textbook</h3>
+                        <p class="accent-text font-bold text-lg">$25</p>
+                    </div>
+                    <div class="item-card" style="animation-delay: 0.2s;">
+                        <img src="https://placehold.co/400x400/e2e8f0/334155?text=Lamp" class="rounded-xl w-full h-40 object-cover" alt="Item">
+                        <h3 class="font-semibold mt-2 text-gray-800">Desk Lamp</h3>
+                        <p class="accent-text font-bold text-lg">$15</p>
+                    </div>
+                    <div class="item-card" style="animation-delay: 0.3s;">
+                        <img src="https://placehold.co/400x400/e2e8f0/334155?text=Chair" class="rounded-xl w-full h-40 object-cover" alt="Item">
+                        <h3 class="font-semibold mt-2 text-gray-800">Ergonomic Chair</h3>
+                        <p class="font-semibold text-blue-600 text-lg">Exchange</p>
+                    </div>
+                    <div class="item-card" style="animation-delay: 0.4s;">
+                        <img src="https://placehold.co/400x400/e2e8f0/334155?text=Calculator" class="rounded-xl w-full h-40 object-cover" alt="Item">
+                        <h3 class="font-semibold mt-2 text-gray-800">TI-84 Calculator</h3>
+                        <p class="accent-text font-bold text-lg">$50</p>
+                    </div>
+                     <div class="item-card" style="animation-delay: 0.5s;">
+                        <img src="https://placehold.co/400x400/e2e8f0/334155?text=Notes" class="rounded-xl w-full h-40 object-cover" alt="Item">
+                        <h3 class="font-semibold mt-2 text-gray-800">Chem Final Notes</h3>
+                        <p class="accent-text font-bold text-lg">$10</p>
+                    </div>
+                    <div class="item-card" style="animation-delay: 0.6s;">
+                        <img src="https://placehold.co/400x400/e2e8f0/334155?text=Mini+Fridge" class="rounded-xl w-full h-40 object-cover" alt="Item">
+                        <h3 class="font-semibold mt-2 text-gray-800">Mini Fridge</h3>
+                        <p class="accent-text font-bold text-lg">$40</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 3: Chat -->
+            <div id="page-chat" class="screen-page pt-20 bg-white">
+                 <h1 class="text-3xl font-bold text-gray-800 px-4 mb-4">Messages</h1>
+                 <div class="divide-y divide-gray-200">
+                     <!-- Chat item 1 -->
+                     <div class="p-4 flex items-center hover:bg-gray-50 cursor-pointer transition-colors">
+                         <img src="https://placehold.co/100x100/f87171/ffffff?text=A" class="w-14 h-14 rounded-full mr-4" alt="avatar">
+                         <div class="flex-1">
+                             <div class="flex justify-between">
+                                 <h3 class="font-semibold text-gray-800">Alex Johnson</h3>
+                                 <p class="text-xs text-gray-500">2:30 PM</p>
+                             </div>
+                             <p class="text-gray-600 truncate">Hey! Is the Econ textbook still available?</p>
+                         </div>
+                     </div>
+                      <!-- Chat item 2 -->
+                     <div class="p-4 flex items-center hover:bg-gray-50 cursor-pointer transition-colors">
+                         <img src="https://placehold.co/100x100/60a5fa/ffffff?text=S" class="w-14 h-14 rounded-full mr-4" alt="avatar">
+                         <div class="flex-1">
+                             <div class="flex justify-between">
+                                 <h3 class="font-semibold text-gray-800">Sarah Lee</h3>
+                                 <p class="text-xs text-gray-500">Yesterday</p>
+                             </div>
+                             <p class="text-gray-600 truncate">Perfect, I can pick up the chair tomorrow.</p>
+                         </div>
+                     </div>
+                      <!-- Chat item 3 -->
+                     <div class="p-4 flex items-center hover:bg-gray-50 cursor-pointer transition-colors">
+                         <img src="https://placehold.co/100x100/34d399/ffffff?text=M" class="w-14 h-14 rounded-full mr-4" alt="avatar">
+                         <div class="flex-1">
+                             <div class="flex justify-between">
+                                 <h3 class="font-semibold text-gray-800">Mike Chen</h3>
+                                 <p class="text-xs text-gray-500">Mon</p>
+                             </div>
+                             <p class="text-gray-600 truncate">Can you do $40 for the calculator?</p>
+                         </div>
+                     </div>
+                 </div>
+            </div>
+            
+            <!-- Bottom Navigation Bar -->
+            <div class="nav-bar">
+                <i id="nav-listings" class="nav-icon fas fa-store"></i>
+                <i id="nav-chat" class="nav-icon fas fa-comments"></i>
+                <i id="nav-register" class="nav-icon active fas fa-user-circle"></i>
+                <div class="home-indicator"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Navigation Logic ---
+        const pages = document.querySelectorAll('.screen-page');
+        const navIcons = document.querySelectorAll('.nav-icon');
+
+        function navigateTo(pageId) {
+            // Hide all pages
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            // Show the target page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            // Update nav icon active state
+            navIcons.forEach(icon => {
+                // The icon's ID corresponds to the page it controls, e.g., 'nav-listings' for 'page-listings'
+                if (`page-${icon.id.split('-')[1]}` === pageId) {
+                    icon.classList.add('active');
+                } else {
+                    icon.classList.remove('active');
+                }
+            });
+        }
+
+        // Add click listeners to nav icons
+        document.getElementById('nav-register').addEventListener('click', () => navigateTo('page-register'));
+        document.getElementById('nav-listings').addEventListener('click', () => navigateTo('page-listings'));
+        document.getElementById('nav-chat').addEventListener('click', () => navigateTo('page-chat'));
+
+        // Set initial page
+        document.addEventListener('DOMContentLoaded', () => {
+             navigateTo('page-register');
+        });
+
+    </script>
+</body>
+</html>
