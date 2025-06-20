@@ -12,23 +12,24 @@
             font-family: 'Inter', sans-serif;
             background-color: #f0f2f5;
         }
-        .iphone-container {
-            width: 390px;
-            height: 844px;
-            border: 16px solid black;
-            border-radius: 56px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0,0,0,0.2);
-            position: relative;
-            overflow: hidden;
-            background-color: #ffffff;
-        }
-        .iphone-screen {
+        /* Main container for the app */
+        .app-container {
             width: 100%;
-            height: 100%;
+            max-width: 420px; /* Limits width on desktop */
+            height: 100vh; /* Full viewport height */
+            margin: auto; /* Center on desktop */
+            position: relative;
+            background-color: #ffffff;
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            position: relative;
-            overflow: hidden;
+        }
+        @media (min-height: 900px) and (min-width: 450px) {
+            .app-container {
+                 max-height: 880px; /* On tall desktop screens, limit height */
+                 border-radius: 2rem;
+            }
         }
         .screen-page {
             position: absolute;
@@ -48,43 +49,17 @@
             z-index: 20;
             display: block;
         }
-        .iphone-notch {
-            position: absolute;
-            top: 0px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 160px;
-            height: 30px;
-            background-color: black;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
-            z-index: 100;
-        }
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 24px 0;
-            color: #1f2937;
-            font-weight: 500;
-            font-size: 14px;
-            position: absolute;
-            top: 0;
-            width: 100%;
-            z-index: 50;
-        }
         .nav-bar {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 80px;
+            height: 70px;
             background-color: #ffffff;
             border-top: 1px solid #e5e7eb;
             display: flex;
             justify-content: space-around;
             align-items: center;
-            padding-bottom: 20px; /* For home indicator space */
             z-index: 30;
         }
         .nav-icon {
@@ -96,16 +71,6 @@
         .nav-icon.active {
             color: #d50b2e;
             transform: scale(1.1);
-        }
-        .home-indicator {
-            position: absolute;
-            bottom: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 134px;
-            height: 5px;
-            background-color: #000000;
-            border-radius: 100px;
         }
         /* Custom Accent Color */
         .accent-bg { background-color: #d50b2e; }
@@ -129,8 +94,8 @@
         .page-header {
              display: flex;
              align-items: center;
-             padding: 16px;
-             padding-top: 50px;
+             padding: 1rem 1rem;
+             padding-top: 1.5rem;
              background-color: #ffffff;
              border-bottom: 1px solid #e5e7eb;
         }
@@ -142,167 +107,157 @@
         .page-header .title {
             font-size: 1.125rem;
             font-weight: 600;
-            margin-left: 16px;
-            flex-grow: 1;
-            text-align: center;
+            margin: 0 auto;
+        }
+         /* Chat bubbles */
+        .message-bubble {
+            max-width: 75%;
+            padding: 10px 16px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+            word-wrap: break-word;
+        }
+        .message-sent {
+            background-color: #d50b2e;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .message-received {
+            background-color: #e5e7eb;
+            color: #1f2937;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
         }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen">
 
-    <div class="iphone-container">
-        <div class="iphone-notch"></div>
-        <div class="status-bar">
-            <span>9:41</span>
-            <div>
-                <i class="fas fa-signal"></i>
-                <i class="fas fa-wifi mx-1"></i>
-                <i class="fas fa-battery-full"></i>
+    <div class="app-container">
+
+        <!-- Page 1: Registration -->
+        <div id="page-register" class="screen-page">
+            <div class="pt-8 p-6 pb-24">
+                <div class="text-center my-10">
+                    <h1 class="text-4xl font-bold text-gray-800">UniMarket</h1>
+                    <p class="text-gray-500 mt-2">The Student Marketplace</p>
+                </div>
+                
+                <form class="space-y-6">
+                    <div>
+                        <label for="name" class="text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" name="name" id="name" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="John Doe">
+                    </div>
+                     <div>
+                        <label for="email" class="text-sm font-medium text-gray-700">University Email</label>
+                        <input type="email" name="email" id="email" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="you@university.edu">
+                    </div>
+                    <div>
+                        <label for="password" class="text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" name="password" id="password" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="••••••••">
+                    </div>
+                    
+                    <button type="button" class="w-full accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Create Account</button>
+                </form>
+
+                <p class="text-center text-gray-500 text-sm mt-8">
+                    Already have an account? <a href="#" class="font-medium accent-text hover:underline">Sign In</a>
+                </p>
             </div>
         </div>
 
-        <div class="iphone-screen">
-            <!-- Page 1: Registration -->
-            <div id="page-register" class="screen-page">
-                <div class="pt-20 p-6 pb-24">
-                    <div class="text-center mb-10">
-                        <h1 class="text-4xl font-bold text-gray-800">UniMarket</h1>
-                        <p class="text-gray-500 mt-2">The Student Marketplace</p>
-                    </div>
-                    
-                    <form class="space-y-6">
-                        <div>
-                            <label for="name" class="text-sm font-medium text-gray-700">Full Name</label>
-                            <input type="text" name="name" id="name" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="John Doe">
-                        </div>
-                         <div>
-                            <label for="email" class="text-sm font-medium text-gray-700">University Email</label>
-                            <input type="email" name="email" id="email" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="you@university.edu">
-                        </div>
-                        <div>
-                            <label for="password" class="text-sm font-medium text-gray-700">Password</label>
-                            <input type="password" name="password" id="password" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="••••••••">
-                        </div>
-                        
-                        <button type="button" class="w-full accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Create Account</button>
-                    </form>
-
-                    <p class="text-center text-gray-500 text-sm mt-8">
-                        Already have an account? <a href="#" class="font-medium accent-text hover:underline">Sign In</a>
-                    </p>
-                </div>
-            </div>
-
-            <!-- Page 2: Listings -->
-            <div id="page-listings" class="screen-page">
-                 <div class="pt-20 p-4 pb-24">
-                    <!-- Header -->
-                    <div class="flex justify-between items-center mb-4 px-2">
-                         <h1 class="text-3xl font-bold text-gray-800">For You</h1>
-                         <div class="flex items-center space-x-4">
-                            <i class="fas fa-search text-gray-500 text-xl"></i>
-                            <i id="add-item-btn" class="fas fa-plus-circle accent-text text-3xl cursor-pointer"></i>
-                         </div>
-                    </div>
-
-                    <!-- Categories -->
-                    <div class="flex space-x-4 mb-6 pb-2 overflow-x-auto" id="category-filter">
-                        <button class="px-4 py-2 bg-red-100 accent-text rounded-full font-semibold whitespace-nowrap" data-category="All">All</button>
-                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Books">Books</button>
-                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Housing">Housing</button>
-                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Altklausuren">Altklausuren</button>
-                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Courses">Courses</button>
-                    </div>
-
-                    <!-- Grid -->
-                    <div id="item-grid" class="grid grid-cols-2 gap-4">
-                        <!-- Items will be injected here by JS -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page 3: Chat -->
-            <div id="page-chat" class="screen-page">
-                 <div class="pt-20 pb-24">
-                    <h1 class="text-3xl font-bold text-gray-800 px-4 mb-4">Messages</h1>
-                     <div class="divide-y divide-gray-200">
-                         <!-- Chat item 1 -->
-                         <div class="p-4 flex items-center hover:bg-gray-50 cursor-pointer transition-colors">
-                             <img src="https://placehold.co/100x100/f87171/ffffff?text=A" class="w-14 h-14 rounded-full mr-4" alt="avatar">
-                             <div class="flex-1 min-w-0">
-                                 <div class="flex justify-between">
-                                     <h3 class="font-semibold text-gray-800">Alex Johnson</h3>
-                                     <p class="text-xs text-gray-500">2:30 PM</p>
-                                 </div>
-                                 <p class="text-gray-600 break-words">Hey! Is the Econ textbook still available?</p>
-                             </div>
-                         </div>
-                          <!-- Chat item 2 -->
-                         <div class="p-4 flex items-center hover:bg-gray-50 cursor-pointer transition-colors">
-                             <img src="https://placehold.co/100x100/60a5fa/ffffff?text=S" class="w-14 h-14 rounded-full mr-4" alt="avatar">
-                             <div class="flex-1 min-w-0">
-                                 <div class="flex justify-between">
-                                     <h3 class="font-semibold text-gray-800">Sarah Lee</h3>
-                                     <p class="text-xs text-gray-500">Yesterday</p>
-                                 </div>
-                                 <p class="text-gray-600 break-words">Perfect, I can pick up the chair tomorrow.</p>
-                             </div>
-                         </div>
+        <!-- Page 2: Listings -->
+        <div id="page-listings" class="screen-page">
+             <div class="pt-8 p-4 pb-24">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-4 px-2">
+                     <h1 class="text-3xl font-bold text-gray-800">For You</h1>
+                     <div class="flex items-center space-x-4">
+                        <i class="fas fa-search text-gray-500 text-xl"></i>
+                        <i id="add-item-btn" class="fas fa-plus-circle accent-text text-3xl cursor-pointer"></i>
                      </div>
-                 </div>
-            </div>
-            
-            <!-- Page 4: Add Item -->
-            <div id="page-add-item" class="screen-page bg-white">
-                <div class="h-full">
-                    <div class="page-header">
-                        <i class="fas fa-arrow-left back-arrow" data-target="page-listings"></i>
-                        <h2 class="title mr-10">Add New Item</h2>
-                    </div>
-                    <form id="add-item-form" class="p-6 space-y-6 pb-24">
-                        <div class="h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center text-gray-500 cursor-pointer">
-                            <i class="fas fa-camera text-4xl"></i>
-                            <p class="mt-2 font-semibold">Add Photo</p>
-                        </div>
-                        <div>
-                            <label class="text-sm font-medium text-gray-700">Title</label>
-                            <input id="item-title-input" type="text" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="e.g. Psychology 101 Textbook" required>
-                        </div>
-                         <div>
-                            <label class="text-sm font-medium text-gray-700">Category</label>
-                            <select id="item-category-select" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" required>
-                               <option value="Books">Books</option>
-                               <option value="Housing">Housing</option>
-                               <option value="Altklausuren">Altklausuren</option>
-                               <option value="Courses">Courses</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-sm font-medium text-gray-700">Price (€)</label>
-                            <input id="item-price-input" type="number" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="Enter 0 for Exchange/Free" required>
-                        </div>
-                        <div>
-                            <label class="text-sm font-medium text-gray-700">Description</label>
-                            <textarea id="item-description-input" rows="4" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="Describe your item, its condition, etc."></textarea>
-                        </div>
-                        <button id="post-item-btn" type="submit" class="w-full accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Post Item</button>
-                    </form>
+                </div>
+
+                <!-- Categories -->
+                <div class="flex space-x-4 mb-6 pb-2 overflow-x-auto" id="category-filter">
+                    <button class="px-4 py-2 bg-red-100 accent-text rounded-full font-semibold whitespace-nowrap" data-category="All">All</button>
+                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Books">Books</button>
+                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Housing">Housing</button>
+                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Altklausuren">Altklausuren</button>
+                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Courses">Courses</button>
+                </div>
+
+                <!-- Grid -->
+                <div id="item-grid" class="grid grid-cols-2 gap-4">
+                    <!-- Items will be injected here by JS -->
                 </div>
             </div>
+        </div>
 
-            <!-- Page 5: Item Detail -->
-            <div id="page-item-detail" class="screen-page bg-white">
-                 <!-- Content will be injected by JS -->
+        <!-- Page 3: Chat List -->
+        <div id="page-chat" class="screen-page">
+             <div class="pt-8 pb-24">
+                <h1 class="text-3xl font-bold text-gray-800 px-4 my-4">Messages</h1>
+                 <div id="chat-list" class="divide-y divide-gray-200">
+                     <!-- Chat list items will be injected here -->
+                 </div>
+             </div>
+        </div>
+        
+        <!-- Page 4: Add Item -->
+        <div id="page-add-item" class="screen-page bg-white">
+            <div class="h-full">
+                <div class="page-header">
+                    <i class="fas fa-arrow-left back-arrow" data-target="page-listings"></i>
+                    <h2 class="title mr-10">Add New Item</h2>
+                </div>
+                <form id="add-item-form" class="p-6 space-y-6 pb-24">
+                    <div class="h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center text-gray-500 cursor-pointer">
+                        <i class="fas fa-camera text-4xl"></i>
+                        <p class="mt-2 font-semibold">Add Photo</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Title</label>
+                        <input id="item-title-input" type="text" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="e.g. Psychology 101 Textbook" required>
+                    </div>
+                     <div>
+                        <label class="text-sm font-medium text-gray-700">Category</label>
+                        <select id="item-category-select" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" required>
+                           <option value="Books">Books</option>
+                           <option value="Housing">Housing</option>
+                           <option value="Altklausuren">Altklausuren</option>
+                           <option value="Courses">Courses</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Price (€)</label>
+                        <input id="item-price-input" type="number" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="Enter 0 for Exchange/Free" required>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Description</label>
+                        <textarea id="item-description-input" rows="4" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="Describe your item, its condition, etc."></textarea>
+                    </div>
+                    <button id="post-item-btn" type="submit" class="w-full accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Post Item</button>
+                </form>
             </div>
+        </div>
+
+        <!-- Page 5: Item Detail -->
+        <div id="page-item-detail" class="screen-page bg-white">
+             <!-- Content will be injected by JS -->
+        </div>
+        
+        <!-- Page 6: Chat Detail -->
+        <div id="page-chat-detail" class="screen-page flex flex-col bg-white overflow-hidden">
+            <!-- Chat Detail content will be injected here -->
+        </div>
 
 
-            <!-- Bottom Navigation Bar -->
-            <div id="nav-bar-container" class="nav-bar">
-                <i id="nav-listings" class="nav-icon fas fa-store"></i>
-                <i id="nav-chat" class="nav-icon fas fa-comments"></i>
-                <i id="nav-register" class="nav-icon fas fa-user-circle"></i>
-                <div class="home-indicator"></div>
-            </div>
+        <!-- Bottom Navigation Bar -->
+        <div id="nav-bar-container" class="nav-bar">
+            <i id="nav-listings" class="nav-icon fas fa-store"></i>
+            <i id="nav-chat" class="nav-icon fas fa-comments"></i>
+            <i id="nav-register" class="nav-icon fas fa-user-circle"></i>
         </div>
     </div>
 
@@ -310,22 +265,44 @@
         document.addEventListener('DOMContentLoaded', () => {
             // --- Data ---
             let items = [
-                { id: 1, title: 'Econ 101 Textbook', price: 25, category: 'Books', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Book' },
-                { id: 2, title: 'Studio Apartment', price: 750, category: 'Housing', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Housing' },
-                { id: 3, title: 'Analysis I Exam Prep', price: 'Exchange', category: 'Courses', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Course' },
-                { id: 4, title: 'Statistics Old Exams', price: 10, category: 'Altklausuren', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Exams' },
-                { id: 5, title: 'Room in Shared Flat', price: 550, category: 'Housing', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Room' },
-                { id: 6, title: 'German B1 Coursebook', price: 20, category: 'Books', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Book' },
+                { id: 1, title: 'Econ 101 Textbook', price: 25, category: 'Books', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Book', sellerId: 1 },
+                { id: 2, title: 'Studio Apartment', price: 750, category: 'Housing', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Housing', sellerId: 2 },
+                { id: 3, title: 'Analysis I Exam Prep', price: 'Exchange', category: 'Courses', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Course', sellerId: 1 },
+                { id: 4, title: 'Statistics Old Exams', price: 10, category: 'Altklausuren', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Exams', sellerId: 2 },
+                { id: 5, title: 'Room in Shared Flat', price: 550, category: 'Housing', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Room', sellerId: 1 },
+                { id: 6, title: 'German B1 Coursebook', price: 20, category: 'Books', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Book', sellerId: 2 },
             ];
+            
+            let conversations = {
+                1: {
+                    id: 1,
+                    userName: 'Alex Johnson',
+                    avatar: 'https://placehold.co/100x100/f87171/ffffff?text=A',
+                    messages: [
+                        { text: 'Hey! Is the Econ textbook still available?', sender: 'them' },
+                        { text: 'Yes, it is!', sender: 'me' },
+                    ]
+                },
+                2: {
+                    id: 2,
+                    userName: 'Sarah Lee',
+                    avatar: 'https://placehold.co/100x100/60a5fa/ffffff?text=S',
+                    messages: [
+                         { text: 'Perfect, I can pick up the chair tomorrow.', sender: 'them' }
+                    ]
+                }
+            };
+
 
             // --- State and Elements ---
             const pages = document.querySelectorAll('.screen-page');
             const navIcons = document.querySelectorAll('.nav-icon');
-            const navBar = document.getElementById('nav-bar-container');
             const itemGrid = document.getElementById('item-grid');
             const categoryFilter = document.getElementById('category-filter');
             const itemDetailPage = document.getElementById('page-item-detail');
             const addItemForm = document.getElementById('add-item-form');
+            const chatListPage = document.getElementById('chat-list');
+            const chatDetailPage = document.getElementById('page-chat-detail');
 
             let activeTab = 'listings';
             const mainPages = ['page-register', 'page-listings', 'page-chat'];
@@ -339,7 +316,9 @@
                 const targetPage = document.getElementById(pageId);
                 if (targetPage) {
                     targetPage.classList.add('active');
-                    targetPage.scrollTop = 0;
+                    if (pageId !== 'page-chat-detail') {
+                        targetPage.scrollTop = 0;
+                    }
                 }
                 navIcons.forEach(icon => {
                     const iconPage = `page-${icon.id.split('-')[1]}`;
@@ -371,6 +350,7 @@
             }
             
             function showItemDetail(item) {
+                const seller = conversations[item.sellerId] || { userName: 'Unknown Seller', avatar: 'https://placehold.co/100x100/e2e8f0/334155?text=?' };
                 const priceDisplay = typeof item.price === 'number'
                         ? `<p class="accent-text font-bold text-3xl my-2">€${item.price}</p>`
                         : `<p class="font-semibold text-blue-600 text-3xl my-2">${item.price}</p>`;
@@ -379,7 +359,7 @@
                     <div class="h-full pb-24">
                         <div class="relative">
                            <img src="${item.image.replace('400x400', '600x600')}" class="w-full h-80 object-cover" alt="${item.title}">
-                           <i class="fas fa-arrow-left back-arrow absolute top-12 left-4 text-xl bg-white/70 backdrop-blur-sm p-3 rounded-full cursor-pointer" data-target="page-listings"></i>
+                           <i class="fas fa-arrow-left back-arrow absolute top-4 left-4 text-xl bg-white/70 backdrop-blur-sm p-3 rounded-full cursor-pointer" data-target="page-listings"></i>
                         </div>
                         <div class="p-6 -mt-4 bg-white rounded-t-2xl">
                            <h1 class="text-3xl font-bold text-gray-800">${item.title}</h1>
@@ -388,17 +368,86 @@
                                ${item.description || 'Like new condition, barely used for one semester. No highlighting or writing inside. Required for the introductory Economics course. Can meet up on campus.'}
                            </p>
                            <div class="mt-6 border-t border-gray-200 pt-4 flex items-center">
-                               <img src="https://placehold.co/100x100/34d399/ffffff?text=S" class="w-12 h-12 rounded-full" alt="seller avatar">
+                               <img src="${seller.avatar}" class="w-12 h-12 rounded-full" alt="seller avatar">
                                <div class="ml-4">
                                    <p class="font-semibold text-gray-800">Posted by</p>
-                                   <p class="text-gray-600">Sarah Lee</p>
+                                   <p class="text-gray-600">${seller.userName}</p>
                                </div>
                            </div>
-                           <button class="w-full mt-6 accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Message Seller</button>
+                           <button class="message-seller-btn w-full mt-6 accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Message Seller</button>
                         </div>
                     </div>`;
                 itemDetailPage.querySelector('.back-arrow').addEventListener('click', (e) => showPage(e.currentTarget.dataset.target));
+                itemDetailPage.querySelector('.message-seller-btn').addEventListener('click', () => showChatDetail(item.sellerId));
                 showPage('page-item-detail');
+            }
+            
+            function renderChatList() {
+                chatListPage.innerHTML = '';
+                Object.values(conversations).forEach(convo => {
+                    const lastMessage = convo.messages[convo.messages.length - 1];
+                    const chatItem = document.createElement('div');
+                    chatItem.className = 'p-4 flex items-center hover:bg-gray-50 cursor-pointer transition-colors';
+                    chatItem.innerHTML = `
+                         <img src="${convo.avatar}" class="w-14 h-14 rounded-full mr-4" alt="avatar">
+                         <div class="flex-1 min-w-0">
+                             <div class="flex justify-between">
+                                 <h3 class="font-semibold text-gray-800">${convo.userName}</h3>
+                                 <p class="text-xs text-gray-500">2:30 PM</p>
+                             </div>
+                             <p class="text-gray-600 truncate">${lastMessage.text}</p>
+                         </div>
+                    `;
+                    chatItem.addEventListener('click', () => showChatDetail(convo.id));
+                    chatListPage.appendChild(chatItem);
+                });
+            }
+
+            function showChatDetail(convoId) {
+                const convo = conversations[convoId];
+                if (!convo) return; // Guard against missing conversations
+                chatDetailPage.innerHTML = `
+                    <div class="page-header">
+                        <i class="fas fa-arrow-left back-arrow" data-target="page-chat"></i>
+                        <h2 class="title">${convo.userName}</h2>
+                         <div class="w-5"></div>
+                    </div>
+                    <div id="message-container" class="flex-1 p-4 flex flex-col gap-2 overflow-y-auto" style="padding-bottom: 80px;">
+                        <!-- Messages will be injected here -->
+                    </div>
+                    <form id="message-form" class="bg-white border-t border-gray-200 p-3 flex items-center gap-2">
+                         <input id="message-input" type="text" class="w-full p-3 border border-gray-300 rounded-full" placeholder="Type a message..." autocomplete="off">
+                         <button type="submit" class="accent-bg text-white rounded-full w-12 h-12 flex-shrink-0 flex items-center justify-center">
+                            <i class="fas fa-paper-plane"></i>
+                         </button>
+                    </form>
+                `;
+
+                const messageContainer = chatDetailPage.querySelector('#message-container');
+                convo.messages.forEach(msg => {
+                    const messageEl = document.createElement('div');
+                    messageEl.className = `message-bubble ${msg.sender === 'me' ? 'message-sent' : 'message-received'}`;
+                    messageEl.textContent = msg.text;
+                    messageContainer.appendChild(messageEl);
+                });
+                
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+
+                chatDetailPage.querySelector('.back-arrow').addEventListener('click', (e) => showPage(e.currentTarget.dataset.target));
+                chatDetailPage.querySelector('#message-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const input = chatDetailPage.querySelector('#message-input');
+                    const text = input.value.trim();
+                    if(text) {
+                        const newMsg = { text, sender: 'me'};
+                        conversations[convoId].messages.push(newMsg);
+                        input.value = ''; // Clear input
+                        showChatDetail(convoId); // Re-render the chat
+                        renderChatList(); // Update last message on list
+                    }
+                });
+
+                showPage('page-chat-detail');
             }
 
 
@@ -432,7 +481,8 @@
                     price: parseFloat(document.getElementById('item-price-input').value) || 'Exchange',
                     category: document.getElementById('item-category-select').value,
                     description: document.getElementById('item-description-input').value,
-                    image: `https://placehold.co/400x400/e2e8f0/334155?text=${document.getElementById('item-category-select').value}`
+                    image: `https://placehold.co/400x400/e2e8f0/334155?text=${document.getElementById('item-category-select').value}`,
+                    sellerId: 2 // Assign to a default seller for demo purposes
                 };
                 items.push(newItem);
                 addItemForm.reset();
@@ -443,6 +493,7 @@
 
             // --- Initial Load ---
             renderItems();
+            renderChatList();
             showPage('page-listings');
         });
     </script>
