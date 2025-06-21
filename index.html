@@ -12,23 +12,23 @@
             font-family: 'Inter', sans-serif;
             background-color: #f0f2f5;
         }
-        .app-container {
-            width: 100%;
-            max-width: 420px;
-            height: 100vh;
-            margin: auto;
+        .iphone-container {
+            width: 390px;
+            height: 844px;
+            border: 16px solid black;
+            border-radius: 56px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0,0,0,0.2);
             position: relative;
-            background-color: #ffffff;
-            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.2);
             overflow: hidden;
+            background-color: #ffffff;
+        }
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
-        }
-         @media (min-height: 900px) and (min-width: 450px) {
-            .app-container {
-                 max-height: 880px;
-                 border-radius: 2rem;
-            }
+            position: relative;
+            overflow: hidden;
         }
         .screen-page {
             position: absolute;
@@ -48,17 +48,43 @@
             z-index: 20;
             display: block;
         }
+        .iphone-notch {
+            position: absolute;
+            top: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 30px;
+            background-color: black;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            z-index: 100;
+        }
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px 0;
+            color: #1f2937;
+            font-weight: 500;
+            font-size: 14px;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+        }
         .nav-bar {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 70px;
+            height: 80px;
             background-color: #ffffff;
             border-top: 1px solid #e5e7eb;
             display: flex;
             justify-content: space-around;
             align-items: center;
+            padding-bottom: 20px; /* For home indicator space */
             z-index: 30;
         }
         .nav-icon {
@@ -70,6 +96,16 @@
         .nav-icon.active {
             color: #d50b2e;
             transform: scale(1.1);
+        }
+        .home-indicator {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 134px;
+            height: 5px;
+            background-color: #000000;
+            border-radius: 100px;
         }
         /* Custom Accent Color */
         .accent-bg { background-color: #d50b2e; }
@@ -93,8 +129,8 @@
         .page-header {
              display: flex;
              align-items: center;
-             padding: 1rem;
-             padding-top: 1.5rem;
+             padding: 16px;
+             padding-top: 50px;
              background-color: #ffffff;
              border-bottom: 1px solid #e5e7eb;
         }
@@ -132,157 +168,170 @@
 </head>
 <body class="flex items-center justify-center min-h-screen">
 
-    <div class="app-container">
-        <!-- Page 1: Login -->
-        <div id="page-login" class="screen-page">
-            <div class="pt-8 p-6 pb-24">
-                <div class="text-center my-10">
-                    <h1 class="text-4xl font-bold text-gray-800">UniMarket</h1>
-                    <p class="text-gray-500 mt-2">The Student Marketplace</p>
-                </div>
-                
-                <form id="login-form" class="space-y-6">
-                    <div>
-                        <label class="text-sm font-medium text-gray-700">Full Name</label>
-                        <input id="login-name-input" type="text" placeholder="e.g. Jessica Doe" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" required>
-                    </div>
-                    <div>
-                        <label class="text-sm font-medium text-gray-700">University Email</label>
-                        <input id="login-email-input" type="email" placeholder="you@university.edu" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" required>
-                    </div>
-                    <div>
-                        <label class="text-sm font-medium text-gray-700">Password</label>
-                        <input id="login-password-input" type="password" placeholder="••••••••" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" required>
+    <div class="iphone-container">
+        <div class="iphone-notch"></div>
+        <div class="status-bar">
+            <span>9:41</span>
+            <div>
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi mx-1"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+
+        <div class="iphone-screen">
+            <!-- Page 1: Login -->
+            <div id="page-login" class="screen-page">
+                <div class="pt-20 p-6 pb-24">
+                    <div class="text-center my-10">
+                        <h1 class="text-4xl font-bold text-gray-800">UniMarket</h1>
+                        <p class="text-gray-500 mt-2">The Student Marketplace</p>
                     </div>
                     
-                    <button id="signin-btn" type="button" class="w-full accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Sign In (Demo)</button>
-                    <button id="create-account-btn" type="submit" class="w-full bg-gray-200 text-gray-700 py-4 rounded-xl font-semibold text-lg hover:bg-gray-300 transition-opacity">Create Account</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- Page 2: Listings -->
-        <div id="page-listings" class="screen-page">
-             <div class="pt-8 p-4 pb-24">
-                <!-- Header -->
-                <div id="listings-header" class="flex justify-between items-center mb-4 px-2">
-                     <h1 class="text-3xl font-bold text-gray-800">For You</h1>
-                     <div class="flex items-center space-x-4">
-                        <i id="search-icon" class="fas fa-search text-gray-500 text-xl cursor-pointer"></i>
-                        <i id="add-item-btn" class="fas fa-plus-circle accent-text text-3xl cursor-pointer"></i>
-                     </div>
-                </div>
-                <!-- Search Header -->
-                <div id="search-header" class="hidden flex items-center mb-4 px-2 w-full gap-2">
-                    <input id="search-input" type="text" class="w-full p-3 border border-gray-300 rounded-xl" placeholder="Search for items...">
-                    <button id="search-cancel-btn" class="text-gray-600 font-semibold pr-2">Cancel</button>
-                </div>
-
-
-                <!-- Categories -->
-                <div class="flex space-x-4 mb-6 pb-2 overflow-x-auto" id="category-filter">
-                    <button class="px-4 py-2 bg-red-100 accent-text rounded-full font-semibold whitespace-nowrap" data-category="All">All</button>
-                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Books">Books</button>
-                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Housing">Housing</button>
-                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Altklausuren">Altklausuren</button>
-                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Courses">Courses</button>
-                </div>
-
-                <!-- Grid -->
-                <div id="item-grid" class="grid grid-cols-2 gap-4">
-                    <!-- Items will be injected here by JS -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Page 3: Chat List -->
-        <div id="page-chat" class="screen-page">
-             <div class="pt-8 pb-24">
-                <h1 class="text-3xl font-bold text-gray-800 px-4 my-4">Messages</h1>
-                 <div id="chat-list" class="divide-y divide-gray-200">
-                     <!-- Chat list items will be injected here -->
-                 </div>
-             </div>
-        </div>
-        
-        <!-- Page 4: Add Item -->
-        <div id="page-add-item" class="screen-page bg-white">
-            <div class="h-full">
-                <div class="page-header">
-                    <i class="fas fa-arrow-left back-arrow" data-target="page-listings"></i>
-                    <h2 class="title mr-10">Add New Item</h2>
-                </div>
-                <form id="add-item-form" class="p-6 space-y-6 pb-24">
-                    <div class="h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center text-gray-500 cursor-pointer">
-                        <i class="fas fa-camera text-4xl"></i>
-                        <p class="mt-2 font-semibold">Add Photo</p>
-                    </div>
-                    <div>
-                        <label class="text-sm font-medium text-gray-700">Title</label>
-                        <input id="item-title-input" type="text" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="e.g. Psychology 101 Textbook" required>
-                    </div>
-                     <div>
-                        <label class="text-sm font-medium text-gray-700">Category</label>
-                        <select id="item-category-select" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" required>
-                           <option value="Books">Books</option>
-                           <option value="Housing">Housing</option>
-                           <option value="Altklausuren">Altklausuren</option>
-                           <option value="Courses">Courses</option>
-                        </select>
-                    </div>
-                    <!-- NEW: Conditional fields for Courses -->
-                    <div id="course-fields" class="space-y-6 hidden">
+                    <form id="login-form" class="space-y-6">
                         <div>
-                            <label class="text-sm font-medium text-gray-700">Professor</label>
-                            <select id="item-prof-select" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500">
-                               <option>Prof A</option>
-                               <option>Prof B</option>
-                               <option>Prof C</option>
-                            </select>
+                            <label class="text-sm font-medium text-gray-700">Full Name</label>
+                            <input id="login-name-input" type="text" placeholder="e.g. Jessica Doe" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" required>
+                        </div>
+                        <div>
+                            <label class="text-sm font-medium text-gray-700">University Email</label>
+                            <input id="login-email-input" type="email" placeholder="you@university.edu" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" required>
+                        </div>
+                        <div>
+                            <label class="text-sm font-medium text-gray-700">Password</label>
+                            <input id="login-password-input" type="password" placeholder="••••••••" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" required>
+                        </div>
+                        
+                        <button id="signin-btn" type="button" class="w-full accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Sign In (Demo)</button>
+                        <button id="create-account-btn" type="submit" class="w-full bg-gray-200 text-gray-700 py-4 rounded-xl font-semibold text-lg hover:bg-gray-300 transition-opacity">Create Account</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Page 2: Listings -->
+            <div id="page-listings" class="screen-page">
+                 <div class="pt-20 p-4 pb-24">
+                    <!-- Header -->
+                    <div id="listings-header" class="flex justify-between items-center mb-4 px-2">
+                         <h1 class="text-3xl font-bold text-gray-800">For You</h1>
+                         <div class="flex items-center space-x-4">
+                            <i id="search-icon" class="fas fa-search text-gray-500 text-xl cursor-pointer"></i>
+                            <i id="add-item-btn" class="fas fa-plus-circle accent-text text-3xl cursor-pointer"></i>
+                         </div>
+                    </div>
+                    <!-- Search Header -->
+                    <div id="search-header" class="hidden flex items-center mb-4 px-2 w-full gap-2">
+                        <input id="search-input" type="text" class="w-full p-3 border border-gray-300 rounded-xl" placeholder="Search for items...">
+                        <button id="search-cancel-btn" class="text-gray-600 font-semibold pr-2">Cancel</button>
+                    </div>
+
+
+                    <!-- Categories -->
+                    <div class="flex space-x-4 mb-6 pb-2 overflow-x-auto" id="category-filter">
+                        <button class="px-4 py-2 bg-red-100 accent-text rounded-full font-semibold whitespace-nowrap" data-category="All">All</button>
+                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Books">Books</button>
+                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Housing">Housing</button>
+                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Altklausuren">Altklausuren</button>
+                        <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full font-semibold whitespace-nowrap" data-category="Courses">Courses</button>
+                    </div>
+
+                    <!-- Grid -->
+                    <div id="item-grid" class="grid grid-cols-2 gap-4">
+                        <!-- Items will be injected here by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 3: Chat List -->
+            <div id="page-chat" class="screen-page">
+                 <div class="pt-20 pb-24">
+                    <h1 class="text-3xl font-bold text-gray-800 px-4 mb-4">Messages</h1>
+                     <div id="chat-list" class="divide-y divide-gray-200">
+                         <!-- Chat list items will be injected here -->
+                     </div>
+                 </div>
+            </div>
+            
+            <!-- Page 4: Add Item -->
+            <div id="page-add-item" class="screen-page bg-white">
+                <div class="h-full">
+                    <div class="page-header">
+                        <i class="fas fa-arrow-left back-arrow" data-target="page-listings"></i>
+                        <h2 class="title mr-10">Add New Item</h2>
+                    </div>
+                    <form id="add-item-form" class="p-6 space-y-6 pb-24">
+                        <div class="h-40 bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center text-gray-500 cursor-pointer">
+                            <i class="fas fa-camera text-4xl"></i>
+                            <p class="mt-2 font-semibold">Add Photo</p>
+                        </div>
+                        <div>
+                            <label class="text-sm font-medium text-gray-700">Title</label>
+                            <input id="item-title-input" type="text" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="e.g. Psychology 101 Textbook" required>
                         </div>
                          <div>
-                            <label class="text-sm font-medium text-gray-700">Course Name</label>
-                            <select id="item-course-name-select" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500">
-                               <option>OOP 1</option>
-                               <option>Math 2</option>
-                               <option>Economics 1</option>
+                            <label class="text-sm font-medium text-gray-700">Category</label>
+                            <select id="item-category-select" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" required>
+                               <option value="Books">Books</option>
+                               <option value="Housing">Housing</option>
+                               <option value="Altklausuren">Altklausuren</option>
+                               <option value="Courses">Courses</option>
                             </select>
                         </div>
-                    </div>
-                    <div>
-                        <label class="text-sm font-medium text-gray-700">Price (€)</label>
-                        <input id="item-price-input" type="number" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="Enter 0 for Exchange/Free" required>
-                    </div>
-                    <div>
-                        <label class="text-sm font-medium text-gray-700">Description</label>
-                        <textarea id="item-description-input" rows="4" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="Describe your item, its condition, etc."></textarea>
-                    </div>
-                    <button id="post-item-btn" type="submit" class="w-full accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Post Item</button>
-                </form>
+                        <!-- NEW: Conditional fields for Courses -->
+                        <div id="course-fields" class="space-y-6 hidden">
+                            <div>
+                                <label class="text-sm font-medium text-gray-700">Professor</label>
+                                <select id="item-prof-select" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500">
+                                   <option>Prof A</option>
+                                   <option>Prof B</option>
+                                   <option>Prof C</option>
+                                </select>
+                            </div>
+                             <div>
+                                <label class="text-sm font-medium text-gray-700">Course Name</label>
+                                <select id="item-course-name-select" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500">
+                                   <option>OOP 1</option>
+                                   <option>Math 2</option>
+                                   <option>Economics 1</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-sm font-medium text-gray-700">Price (€)</label>
+                            <input id="item-price-input" type="number" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="Enter 0 for Exchange/Free" required>
+                        </div>
+                        <div>
+                            <label class="text-sm font-medium text-gray-700">Description</label>
+                            <textarea id="item-description-input" rows="4" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="Describe your item, its condition, etc."></textarea>
+                        </div>
+                        <button id="post-item-btn" type="submit" class="w-full accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Post Item</button>
+                    </form>
+                </div>
             </div>
-        </div>
 
-        <!-- Page 5: Item Detail -->
-        <div id="page-item-detail" class="screen-page bg-white">
-             <!-- Content will be injected by JS -->
-        </div>
-        
-        <!-- Page 6: Chat Detail -->
-        <div id="page-chat-detail" class="screen-page flex flex-col bg-white overflow-hidden">
-            <!-- Chat Detail content will be injected here -->
-        </div>
-        
-        <!-- Page 7: Profile -->
-        <div id="page-profile" class="screen-page bg-white">
-             <!-- Profile content will be injected here -->
-        </div>
+            <!-- Page 5: Item Detail -->
+            <div id="page-item-detail" class="screen-page bg-white">
+                 <!-- Content will be injected by JS -->
+            </div>
+            
+            <!-- Page 6: Chat Detail -->
+            <div id="page-chat-detail" class="screen-page flex flex-col bg-white">
+                <!-- Chat Detail content will be injected here -->
+            </div>
+            
+            <!-- Page 7: Profile -->
+            <div id="page-profile" class="screen-page bg-white">
+                 <!-- Profile content will be injected here -->
+            </div>
 
 
-        <!-- Bottom Navigation Bar -->
-        <div id="nav-bar-container" class="nav-bar">
-            <i id="nav-listings" class="nav-icon fas fa-store"></i>
-            <i id="nav-chat" class="nav-icon fas fa-comments"></i>
-            <i id="nav-profile" class="nav-icon fas fa-user-circle"></i>
+            <!-- Bottom Navigation Bar -->
+            <div id="nav-bar-container" class="nav-bar">
+                <i id="nav-listings" class="nav-icon fas fa-store"></i>
+                <i id="nav-chat" class="nav-icon fas fa-comments"></i>
+                <i id="nav-profile" class="nav-icon fas fa-user-circle"></i>
+                <div class="home-indicator"></div>
+            </div>
         </div>
     </div>
 
@@ -453,7 +502,7 @@
                     <div class="h-full pb-24">
                         <div class="relative">
                            <img src="${item.image.replace('400x400', '600x600')}" class="w-full h-80 object-cover" alt="${item.title}">
-                           <i class="fas fa-arrow-left back-arrow absolute top-4 left-4 text-xl bg-white/70 backdrop-blur-sm p-3 rounded-full cursor-pointer" data-target="page-listings"></i>
+                           <i class="fas fa-arrow-left back-arrow absolute top-12 left-4 text-xl bg-white/70 backdrop-blur-sm p-3 rounded-full cursor-pointer" data-target="page-listings"></i>
                         </div>
                         <div class="p-6 -mt-4 bg-white rounded-t-2xl">
                            <h1 class="text-3xl font-bold text-gray-800">${item.title}</h1>
@@ -502,15 +551,15 @@
                 const convo = conversations[convoId];
                 if (!convo) return; 
                 chatDetailPage.innerHTML = `
-                    <div class="page-header">
+                    <div class="page-header sticky top-0 bg-white/80 backdrop-blur-sm z-10">
                         <i class="fas fa-arrow-left back-arrow" data-target="page-chat"></i>
                         <h2 class="title">${convo.userName}</h2>
                          <div class="w-5"></div>
                     </div>
-                    <div id="message-container" class="flex-1 p-4 flex flex-col gap-2 overflow-y-auto" style="padding-bottom: 80px;">
+                    <div id="message-container" class="flex-1 p-4 flex flex-col gap-2 overflow-y-auto" style="padding-bottom: 150px;">
                         <!-- Messages will be injected here -->
                     </div>
-                    <form id="message-form" class="bg-white border-t border-gray-200 p-3 flex items-center gap-2">
+                    <form id="message-form" class="bg-white border-t border-gray-200 p-3 flex items-center gap-2 fixed bottom-0 left-0 right-0 w-full" style="padding-bottom: calc(0.75rem + 20px);">
                          <input id="message-input" type="text" class="w-full p-3 border border-gray-300 rounded-full" placeholder="Type a message..." autocomplete="off">
                          <button type="submit" class="accent-bg text-white rounded-full w-12 h-12 flex-shrink-0 flex items-center justify-center">
                             <i class="fas fa-paper-plane"></i>
@@ -548,8 +597,8 @@
             function renderProfilePage() {
                 if(!currentUser) return;
                 profilePage.innerHTML = `
-                    <div class="pt-8 p-6 pb-24 text-center">
-                         <img src="${currentUser.avatar}" class="w-32 h-32 rounded-full mx-auto my-6 border-4 border-white shadow-lg">
+                    <div class="pt-20 p-6 pb-24 text-center">
+                        <img src="${currentUser.avatar}" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white shadow-lg">
                         <h2 class="text-2xl font-bold text-gray-800">${currentUser.name}</h2>
                         <p class="text-gray-500">${currentUser.email}</p>
                         
