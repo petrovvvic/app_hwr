@@ -12,12 +12,11 @@
             font-family: 'Inter', sans-serif;
             background-color: #f0f2f5;
         }
-        /* Main container for the app */
         .app-container {
             width: 100%;
-            max-width: 420px; /* Limits width on desktop */
-            height: 100vh; /* Full viewport height */
-            margin: auto; /* Center on desktop */
+            max-width: 420px;
+            height: 100vh;
+            margin: auto;
             position: relative;
             background-color: #ffffff;
             box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.2);
@@ -25,9 +24,9 @@
             display: flex;
             flex-direction: column;
         }
-        @media (min-height: 900px) and (min-width: 450px) {
+         @media (min-height: 900px) and (min-width: 450px) {
             .app-container {
-                 max-height: 880px; /* On tall desktop screens, limit height */
+                 max-height: 880px;
                  border-radius: 2rem;
             }
         }
@@ -94,7 +93,7 @@
         .page-header {
              display: flex;
              align-items: center;
-             padding: 1rem 1rem;
+             padding: 1rem;
              padding-top: 1.5rem;
              background-color: #ffffff;
              border-bottom: 1px solid #e5e7eb;
@@ -134,35 +133,31 @@
 <body class="flex items-center justify-center min-h-screen">
 
     <div class="app-container">
-
-        <!-- Page 1: Registration -->
-        <div id="page-register" class="screen-page">
+        <!-- Page 1: Login -->
+        <div id="page-login" class="screen-page">
             <div class="pt-8 p-6 pb-24">
                 <div class="text-center my-10">
                     <h1 class="text-4xl font-bold text-gray-800">UniMarket</h1>
                     <p class="text-gray-500 mt-2">The Student Marketplace</p>
                 </div>
                 
-                <form class="space-y-6">
+                <form id="login-form" class="space-y-6">
                     <div>
-                        <label for="name" class="text-sm font-medium text-gray-700">Full Name</label>
-                        <input type="text" name="name" id="name" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="John Doe">
-                    </div>
-                     <div>
-                        <label for="email" class="text-sm font-medium text-gray-700">University Email</label>
-                        <input type="email" name="email" id="email" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="you@university.edu">
+                        <label class="text-sm font-medium text-gray-700">Full Name</label>
+                        <input id="login-name-input" type="text" placeholder="e.g. Jessica Doe" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" required>
                     </div>
                     <div>
-                        <label for="password" class="text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" name="password" id="password" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="••••••••">
+                        <label class="text-sm font-medium text-gray-700">University Email</label>
+                        <input id="login-email-input" type="email" placeholder="you@university.edu" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" required>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Password</label>
+                        <input id="login-password-input" type="password" placeholder="••••••••" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" required>
                     </div>
                     
-                    <button type="button" class="w-full accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Create Account</button>
+                    <button id="signin-btn" type="button" class="w-full accent-bg text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:opacity-90 transition-opacity">Sign In (Demo)</button>
+                    <button id="create-account-btn" type="submit" class="w-full bg-gray-200 text-gray-700 py-4 rounded-xl font-semibold text-lg hover:bg-gray-300 transition-opacity">Create Account</button>
                 </form>
-
-                <p class="text-center text-gray-500 text-sm mt-8">
-                    Already have an account? <a href="#" class="font-medium accent-text hover:underline">Sign In</a>
-                </p>
             </div>
         </div>
 
@@ -170,13 +165,19 @@
         <div id="page-listings" class="screen-page">
              <div class="pt-8 p-4 pb-24">
                 <!-- Header -->
-                <div class="flex justify-between items-center mb-4 px-2">
+                <div id="listings-header" class="flex justify-between items-center mb-4 px-2">
                      <h1 class="text-3xl font-bold text-gray-800">For You</h1>
                      <div class="flex items-center space-x-4">
-                        <i class="fas fa-search text-gray-500 text-xl"></i>
+                        <i id="search-icon" class="fas fa-search text-gray-500 text-xl cursor-pointer"></i>
                         <i id="add-item-btn" class="fas fa-plus-circle accent-text text-3xl cursor-pointer"></i>
                      </div>
                 </div>
+                <!-- Search Header -->
+                <div id="search-header" class="hidden flex items-center mb-4 px-2 w-full gap-2">
+                    <input id="search-input" type="text" class="w-full p-3 border border-gray-300 rounded-xl" placeholder="Search for items...">
+                    <button id="search-cancel-btn" class="text-gray-600 font-semibold pr-2">Cancel</button>
+                </div>
+
 
                 <!-- Categories -->
                 <div class="flex space-x-4 mb-6 pb-2 overflow-x-auto" id="category-filter">
@@ -229,6 +230,25 @@
                            <option value="Courses">Courses</option>
                         </select>
                     </div>
+                    <!-- NEW: Conditional fields for Courses -->
+                    <div id="course-fields" class="space-y-6 hidden">
+                        <div>
+                            <label class="text-sm font-medium text-gray-700">Professor</label>
+                            <select id="item-prof-select" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500">
+                               <option>Prof A</option>
+                               <option>Prof B</option>
+                               <option>Prof C</option>
+                            </select>
+                        </div>
+                         <div>
+                            <label class="text-sm font-medium text-gray-700">Course Name</label>
+                            <select id="item-course-name-select" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500">
+                               <option>OOP 1</option>
+                               <option>Math 2</option>
+                               <option>Economics 1</option>
+                            </select>
+                        </div>
+                    </div>
                     <div>
                         <label class="text-sm font-medium text-gray-700">Price (€)</label>
                         <input id="item-price-input" type="number" class="mt-1 w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-red-500 focus:border-red-500" placeholder="Enter 0 for Exchange/Free" required>
@@ -251,13 +271,18 @@
         <div id="page-chat-detail" class="screen-page flex flex-col bg-white overflow-hidden">
             <!-- Chat Detail content will be injected here -->
         </div>
+        
+        <!-- Page 7: Profile -->
+        <div id="page-profile" class="screen-page bg-white">
+             <!-- Profile content will be injected here -->
+        </div>
 
 
         <!-- Bottom Navigation Bar -->
         <div id="nav-bar-container" class="nav-bar">
             <i id="nav-listings" class="nav-icon fas fa-store"></i>
             <i id="nav-chat" class="nav-icon fas fa-comments"></i>
-            <i id="nav-register" class="nav-icon fas fa-user-circle"></i>
+            <i id="nav-profile" class="nav-icon fas fa-user-circle"></i>
         </div>
     </div>
 
@@ -265,12 +290,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             // --- Data ---
             let items = [
-                { id: 1, title: 'Econ 101 Textbook', price: 25, category: 'Books', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Book', sellerId: 1 },
-                { id: 2, title: 'Studio Apartment', price: 750, category: 'Housing', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Housing', sellerId: 2 },
-                { id: 3, title: 'Analysis I Exam Prep', price: 'Exchange', category: 'Courses', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Course', sellerId: 1 },
-                { id: 4, title: 'Statistics Old Exams', price: 10, category: 'Altklausuren', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Exams', sellerId: 2 },
-                { id: 5, title: 'Room in Shared Flat', price: 550, category: 'Housing', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Room', sellerId: 1 },
-                { id: 6, title: 'German B1 Coursebook', price: 20, category: 'Books', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Book', sellerId: 2 },
+                { id: 1, title: 'Econ 101 Textbook', description: 'Very good condition.', price: 25, category: 'Books', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Book', sellerId: 1 },
+                { id: 2, title: 'Studio Apartment', description: 'Centrally located studio.', price: 750, category: 'Housing', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Housing', sellerId: 2 },
+                { id: 3, title: 'Analysis I Exam Prep', description: 'Intensive course.', price: 'Exchange', category: 'Courses', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Course', sellerId: 1, courseName: 'Math 2', professor: 'Prof A' },
+                { id: 4, title: 'Statistics Old Exams', description: 'Collection from 2018-2022.', price: 10, category: 'Altklausuren', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Exams', sellerId: 2 },
+                { id: 5, title: 'Room in Shared Flat', description: 'Looking for a new flatmate.', price: 550, category: 'Housing', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Room', sellerId: 1 },
+                { id: 6, title: 'German B1 Coursebook', description: 'Includes workbook.', price: 20, category: 'Books', image: 'https://placehold.co/400x400/e2e8f0/334155?text=Book', sellerId: 2 },
             ];
             
             let conversations = {
@@ -292,20 +317,34 @@
                     ]
                 }
             };
-
+            
+            let currentUser = null;
 
             // --- State and Elements ---
             const pages = document.querySelectorAll('.screen-page');
             const navIcons = document.querySelectorAll('.nav-icon');
+            const navBar = document.getElementById('nav-bar-container');
             const itemGrid = document.getElementById('item-grid');
             const categoryFilter = document.getElementById('category-filter');
             const itemDetailPage = document.getElementById('page-item-detail');
             const addItemForm = document.getElementById('add-item-form');
+            const loginForm = document.getElementById('login-form');
             const chatListPage = document.getElementById('chat-list');
             const chatDetailPage = document.getElementById('page-chat-detail');
+            const profilePage = document.getElementById('page-profile');
+            const categorySelect = document.getElementById('item-category-select');
+            const courseFields = document.getElementById('course-fields');
+            const listingsHeader = document.getElementById('listings-header');
+            const searchHeader = document.getElementById('search-header');
+            const searchIcon = document.getElementById('search-icon');
+            const searchInput = document.getElementById('search-input');
+            const searchCancelBtn = document.getElementById('search-cancel-btn');
+
 
             let activeTab = 'listings';
-            const mainPages = ['page-register', 'page-listings', 'page-chat'];
+            let currentCategory = 'All';
+            let currentSearchQuery = '';
+            const mainPages = ['page-profile', 'page-listings', 'page-chat'];
 
             // --- Page Navigation ---
             function showPage(pageId) {
@@ -324,12 +363,51 @@
                     const iconPage = `page-${icon.id.split('-')[1]}`;
                     icon.classList.toggle('active', iconPage === activeTab);
                 });
+                
+                navBar.style.display = currentUser ? 'flex' : 'none';
             }
 
+            // --- Login/Logout ---
+            function login(name, email) {
+                 const initial = name ? name.charAt(0).toUpperCase() : 'U';
+                currentUser = {
+                    name: name,
+                    email: email,
+                    avatar: `https://placehold.co/150x150/d50b2e/ffffff?text=${initial}`
+                };
+                showPage('page-listings');
+            }
+            
+            function logout() {
+                currentUser = null;
+                showPage('page-login');
+            }
+
+
             // --- Content Rendering ---
-            function renderItems(filter = 'All') {
+            function renderItems(filter = 'All', query = '') {
+                // 1. Filter by category
+                let filteredItems = filter === 'All'
+                    ? [...items]
+                    : items.filter(item => item.category === filter);
+
+                // 2. Filter by search query
+                const lowerCaseQuery = query.toLowerCase().trim();
+                if (lowerCaseQuery) {
+                    filteredItems = filteredItems.filter(item =>
+                        item.title.toLowerCase().includes(lowerCaseQuery) ||
+                        (item.description && item.description.toLowerCase().includes(lowerCaseQuery))
+                    );
+                }
+                
+                // 3. Render
                 itemGrid.innerHTML = '';
-                const itemsToRender = (filter === 'All' ? items : items.filter(item => item.category === filter)).slice().reverse();
+                const itemsToRender = filteredItems.slice().reverse();
+                
+                 if (itemsToRender.length === 0) {
+                    itemGrid.innerHTML = `<p class="col-span-2 text-center text-gray-500 mt-8">No items found.</p>`;
+                    return;
+                }
                 
                 itemsToRender.forEach((item, index) => {
                     const priceDisplay = typeof item.price === 'number'
@@ -355,6 +433,22 @@
                         ? `<p class="accent-text font-bold text-3xl my-2">€${item.price}</p>`
                         : `<p class="font-semibold text-blue-600 text-3xl my-2">${item.price}</p>`;
                 
+                let courseDetailsHTML = '';
+                if (item.category === 'Courses' && item.professor && item.courseName) {
+                    courseDetailsHTML = `
+                        <div class="mt-4 grid grid-cols-2 gap-4 text-left">
+                            <div>
+                                <p class="text-sm text-gray-500">Course</p>
+                                <p class="font-semibold text-gray-800">${item.courseName}</p>
+                            </div>
+                             <div>
+                                <p class="text-sm text-gray-500">Professor</p>
+                                <p class="font-semibold text-gray-800">${item.professor}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
                 itemDetailPage.innerHTML = `
                     <div class="h-full pb-24">
                         <div class="relative">
@@ -364,8 +458,9 @@
                         <div class="p-6 -mt-4 bg-white rounded-t-2xl">
                            <h1 class="text-3xl font-bold text-gray-800">${item.title}</h1>
                            ${priceDisplay}
+                           ${courseDetailsHTML}
                            <p class="text-gray-600 leading-relaxed mt-4">
-                               ${item.description || 'Like new condition, barely used for one semester. No highlighting or writing inside. Required for the introductory Economics course. Can meet up on campus.'}
+                               ${item.description || 'No description provided.'}
                            </p>
                            <div class="mt-6 border-t border-gray-200 pt-4 flex items-center">
                                <img src="${seller.avatar}" class="w-12 h-12 rounded-full" alt="seller avatar">
@@ -405,7 +500,7 @@
 
             function showChatDetail(convoId) {
                 const convo = conversations[convoId];
-                if (!convo) return; // Guard against missing conversations
+                if (!convo) return; 
                 chatDetailPage.innerHTML = `
                     <div class="page-header">
                         <i class="fas fa-arrow-left back-arrow" data-target="page-chat"></i>
@@ -441,18 +536,57 @@
                     if(text) {
                         const newMsg = { text, sender: 'me'};
                         conversations[convoId].messages.push(newMsg);
-                        input.value = ''; // Clear input
-                        showChatDetail(convoId); // Re-render the chat
-                        renderChatList(); // Update last message on list
+                        input.value = ''; 
+                        showChatDetail(convoId); 
+                        renderChatList(); 
                     }
                 });
 
                 showPage('page-chat-detail');
             }
 
+            function renderProfilePage() {
+                if(!currentUser) return;
+                profilePage.innerHTML = `
+                    <div class="pt-8 p-6 pb-24 text-center">
+                         <img src="${currentUser.avatar}" class="w-32 h-32 rounded-full mx-auto my-6 border-4 border-white shadow-lg">
+                        <h2 class="text-2xl font-bold text-gray-800">${currentUser.name}</h2>
+                        <p class="text-gray-500">${currentUser.email}</p>
+                        
+                        <div class="text-left mt-10 space-y-2">
+                           <a href="#" class="flex items-center p-4 bg-gray-100 rounded-lg"><i class="fas fa-edit w-6 mr-3 accent-text"></i> Edit Profile</a>
+                           <a href="#" class="flex items-center p-4 bg-gray-100 rounded-lg"><i class="fas fa-list-alt w-6 mr-3 accent-text"></i> My Listings</a>
+                           <a href="#" class="flex items-center p-4 bg-gray-100 rounded-lg"><i class="fas fa-cog w-6 mr-3 accent-text"></i> Settings</a>
+                        </div>
+
+                        <button id="logout-btn" class="w-full mt-10 bg-red-100 text-red-700 py-3 rounded-xl font-semibold text-lg hover:bg-red-200 transition-opacity">Logout</button>
+                    </div>
+                `;
+                 profilePage.querySelector('#logout-btn').addEventListener('click', logout);
+            }
+
 
             // --- Event Listeners ---
-            document.getElementById('nav-register').addEventListener('click', () => showPage('page-register'));
+             document.getElementById('signin-btn').addEventListener('click', () => {
+                login('Jessica Doe', 'jessica.doe@university.edu');
+            });
+
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const nameInput = document.getElementById('login-name-input').value;
+                const emailInput = document.getElementById('login-email-input').value;
+                login(nameInput, emailInput);
+                loginForm.reset();
+            });
+
+            document.getElementById('nav-profile').addEventListener('click', () => {
+                if (currentUser) {
+                    renderProfilePage();
+                    showPage('page-profile');
+                } else {
+                    showPage('page-login');
+                }
+            });
             document.getElementById('nav-listings').addEventListener('click', () => showPage('page-listings'));
             document.getElementById('nav-chat').addEventListener('click', () => showPage('page-chat'));
             document.getElementById('add-item-btn').addEventListener('click', () => showPage('page-add-item'));
@@ -460,6 +594,26 @@
             document.querySelectorAll('.back-arrow').forEach(arrow => {
                 arrow.addEventListener('click', (e) => showPage(e.currentTarget.dataset.target));
             });
+
+            searchIcon.addEventListener('click', () => {
+                listingsHeader.classList.add('hidden');
+                searchHeader.classList.remove('hidden');
+                searchInput.focus();
+            });
+
+            searchCancelBtn.addEventListener('click', () => {
+                listingsHeader.classList.remove('hidden');
+                searchHeader.classList.add('hidden');
+                searchInput.value = '';
+                currentSearchQuery = '';
+                renderItems(currentCategory, currentSearchQuery);
+            });
+
+            searchInput.addEventListener('input', (e) => {
+                currentSearchQuery = e.target.value;
+                renderItems(currentCategory, currentSearchQuery);
+            });
+
 
             categoryFilter.addEventListener('click', (e) => {
                 if(e.target.tagName === 'BUTTON') {
@@ -469,32 +623,49 @@
                     });
                     e.target.classList.add('bg-red-100', 'accent-text');
                     e.target.classList.remove('bg-gray-100', 'text-gray-600');
-                    renderItems(e.target.dataset.category);
+                    currentCategory = e.target.dataset.category;
+                    renderItems(currentCategory, currentSearchQuery);
                 }
             });
             
             addItemForm.addEventListener('submit', (e) => {
                 e.preventDefault();
+                const category = categorySelect.value;
                 const newItem = {
                     id: Date.now(),
                     title: document.getElementById('item-title-input').value,
                     price: parseFloat(document.getElementById('item-price-input').value) || 'Exchange',
-                    category: document.getElementById('item-category-select').value,
+                    category: category,
                     description: document.getElementById('item-description-input').value,
-                    image: `https://placehold.co/400x400/e2e8f0/334155?text=${document.getElementById('item-category-select').value}`,
+                    image: `https://placehold.co/400x400/e2e8f0/334155?text=${category}`,
                     sellerId: 2 // Assign to a default seller for demo purposes
                 };
+
+                if (category === 'Courses') {
+                    newItem.professor = document.getElementById('item-prof-select').value;
+                    newItem.courseName = document.getElementById('item-course-name-select').value;
+                }
+
                 items.push(newItem);
                 addItemForm.reset();
+                courseFields.classList.add('hidden');
                 renderItems();
                 showPage('page-listings');
+            });
+
+            categorySelect.addEventListener('change', (e) => {
+                if (e.target.value === 'Courses') {
+                    courseFields.classList.remove('hidden');
+                } else {
+                    courseFields.classList.add('hidden');
+                }
             });
 
 
             // --- Initial Load ---
             renderItems();
             renderChatList();
-            showPage('page-listings');
+            showPage('page-login');
         });
     </script>
 </body>
